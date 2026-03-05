@@ -67,7 +67,8 @@
       "Bash(git commit -m \"Fix desktop pin dialog rendering with proper modal overlay\")",
       "Bash(git commit -m \"Add click handlers to desktop pin dialog\")",
       "Bash(git commit -m \"Add console logging and fix desktop layout\")",
-      "Bash(git commit -m \"Fix date formatting options for PinDialog\")"
+      "Bash(git commit -m \"Fix date formatting options for PinDialog\")",
+      "Bash(git commit -m \"Simplify PinDialog by removing date formatting\")"
     ]
   }
 }

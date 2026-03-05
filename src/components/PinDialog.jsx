@@ -1,8 +1,6 @@
 import { MapPin, Trash2 } from 'lucide-react'
 
 export function PinDialog({ pin, onDelete, onClose }) {
-  console.log('PinDialog mounted with pin:', pin)
-
   const handleDelete = () => {
     onDelete(pin.id)
     onClose()
@@ -13,18 +11,6 @@ export function PinDialog({ pin, onDelete, onClose }) {
       onClose()
     }
   }
-
-  const droppedDate = new Date(pin.id)
-  const formattedDate = droppedDate.toLocaleDateString('en-US', {
-    month: 'numeric',
-    day: 'numeric',
-    year: '2-digit'
-  })
-  const formattedTime = droppedDate.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true
-  })
 
   return (
     <>
@@ -47,7 +33,6 @@ export function PinDialog({ pin, onDelete, onClose }) {
             {/* Title and Timestamp */}
             <div className="flex flex-col justify-center">
               <h2 className="text-xl font-semibold">Saved Pin</h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{formattedDate}, {formattedTime}</p>
             </div>
           </div>
 
@@ -95,7 +80,6 @@ export function PinDialog({ pin, onDelete, onClose }) {
             </div>
             <div>
               <h2 className="text-base font-semibold">Saved Pin</h2>
-              <p className="text-xs text-gray-500">Dropped: {formattedDate}, {formattedTime}</p>
             </div>
           </div>
 
