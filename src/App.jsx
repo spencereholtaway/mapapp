@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Map } from './components/Map'
 import { PinDialog } from './components/PinDialog'
 import { ControlPanel } from './components/ControlPanel'
@@ -14,6 +14,8 @@ export default function App() {
 
   const [selectedPin, setSelectedPin] = useState(null)
   const [uploadedFileName, setUploadedFileName] = useState(null)
+  const prevMapPositionRef = useRef(null)  // position before mobile offset centering
+  const shouldRestoreRef = useRef(false)
   const [mapCenter, setMapCenter] = useState(null)
   const [mapZoom, setMapZoom] = useState(15)
   const [shouldFitBounds, setShouldFitBounds] = useState(false)
@@ -34,13 +36,34 @@ export default function App() {
   }
 
   // Handle pin click to show dialog
-  const handlePinClick = (pin) => {
+  const handlePinClick = (pin, prevPosition = null) => {
     setSelectedPin(pin)
-    // On desktop, center on pin via mapCenter state.
-    // On mobile, PinMarkers handles offset centering directly via useMap().
-    if (window.innerWidth >= 768) {
+    if (window.innerWidth < 768 && prevPosition) {
+      // Save position so we can restore it when the tray is dismissed
+      prevMapPositionRef.current = prevPosition
+      shouldRestoreRef.current = true
+    } else if (window.innerWidth >= 768) {
       setMapCenter([pin.latitude, pin.longitude])
     }
+  }
+
+  // Dismiss tray without deleting — restore the map to where it was
+  const handleDialogClose = () => {
+    setSelectedPin(null)
+    if (shouldRestoreRef.current && prevMapPositionRef.current) {
+      setMapCenter(prevMapPositionRef.current.center)
+      setMapZoom(prevMapPositionRef.current.zoom)
+    }
+    shouldRestoreRef.current = false
+    prevMapPositionRef.current = null
+  }
+
+  // Delete pin from tray — don't restore position
+  const handleDialogDelete = (pinId) => {
+    shouldRestoreRef.current = false
+    deletePin(pinId)
+    // PinDialog calls onClose() next, which calls handleDialogClose,
+    // but shouldRestoreRef is already false so no restore happens
   }
 
   // Handle cluster click to zoom in
@@ -203,8 +226,8 @@ export default function App() {
       {/* Pin Dialog (mobile only - desktop uses Leaflet Tooltip) */}
       <PinDialog
         pin={selectedPin}
-        onDelete={deletePin}
-        onClose={() => setSelectedPin(null)}
+        onDelete={handleDialogDelete}
+        onClose={handleDialogClose}
       />
 
       {/* Mobile: Drop Pin at Current Location FAB */}

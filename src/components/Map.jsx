@@ -162,8 +162,12 @@ function PinMarkers({ pins, onPinClick, onDeletePin }) {
 
   const handlePinClick = (pin) => {
     if (window.innerWidth < 768) {
+      // Capture current position before moving so App can restore it on dismiss
+      const c = map.getCenter()
+      const prevPosition = { center: [c.lat, c.lng], zoom: map.getZoom() }
+
       // Mobile: show bottom sheet + offset center above it
-      onPinClick(pin)
+      onPinClick(pin, prevPosition)
       const containerHeight = map.getContainer().offsetHeight
       const pinPoint = map.latLngToContainerPoint([pin.latitude, pin.longitude])
       const offset = containerHeight * 0.25
