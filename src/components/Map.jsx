@@ -81,8 +81,7 @@ export function Map({
       <TileLayer
         attribution={isDark ? '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' : '&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
         url={tileUrl}
-        tileSize={256}
-        detectRetina={isDark}
+        tileSize={512}
         maxZoom={isDark ? 19 : 22}
       />
 
