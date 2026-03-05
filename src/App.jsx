@@ -162,14 +162,14 @@ export default function App() {
     <div className="relative w-full h-screen">
       {/* Show loading state */}
       {locationLoading && (
-        <div className="absolute top-4 right-4 z-40 glass px-4 py-2 rounded-lg text-sm">
+        <div className="absolute z-40 glass px-4 py-2 rounded-lg text-sm" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 16px)', right: '16px' }}>
           Requesting location...
         </div>
       )}
 
       {/* Show location error */}
       {locationError && !location && !locationLoading && (
-        <div className="absolute top-4 right-4 z-40 glass px-3 py-3 rounded-xl text-sm max-w-[220px]" style={{ borderColor: 'rgba(239,68,68,0.4)', borderWidth: 1 }}>
+        <div className="absolute z-40 glass px-3 py-3 rounded-xl text-sm max-w-[220px]" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 16px)', right: '16px', borderColor: 'rgba(239,68,68,0.4)', borderWidth: 1 }}>
           <p className="font-semibold text-red-500 mb-1">Location unavailable</p>
           {permissionDenied ? (
             <>

@@ -21,7 +21,7 @@ export function ControlPanel({
 
   return (
     <>
-      <div className="absolute top-4 left-4 z-40 flex flex-col gap-2">
+      <div className="absolute z-40 flex flex-col gap-2" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 16px)', left: '16px' }}>
         {/* Pin Count - Split Pill Button */}
         <div
           className="glass flex items-center !rounded-full overflow-hidden text-sm font-medium"
