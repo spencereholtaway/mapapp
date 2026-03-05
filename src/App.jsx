@@ -101,9 +101,25 @@ export default function App() {
     input.click()
   }
 
-  // Handle export
-  const handleExport = () => {
+  // Handle export — uses native file save dialog when available (Chrome/Edge),
+  // falls back to anchor-download for Safari/Firefox
+  const handleExport = async () => {
     const data = exportToPinFormat()
+    if ('showSaveFilePicker' in window) {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: 'pins.txt',
+          types: [{ description: 'Text file', accept: { 'text/plain': ['.txt'] } }]
+        })
+        const writable = await handle.createWritable()
+        await writable.write(data)
+        await writable.close()
+        return
+      } catch (err) {
+        if (err.name === 'AbortError') return
+        // fall through to legacy download on unexpected errors
+      }
+    }
     const element = document.createElement('a')
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(data))
     element.setAttribute('download', 'pins.txt')

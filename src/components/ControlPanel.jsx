@@ -1,4 +1,4 @@
-import { MapPin, Crosshair, Moon, Sun, Download, File, Trash2 } from 'lucide-react'
+import { MapPin, Crosshair, Moon, Sun, Save, File, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 
 export function ControlPanel({
@@ -21,7 +21,7 @@ export function ControlPanel({
 
   return (
     <>
-      <div className="absolute top-4 left-4 z-40 flex flex-col gap-2">
+      <div className="absolute top-4 left-4 z-40 flex flex-col gap-2" style={{ width: '148px' }}>
         {/* Pin Count - Split Pill Button */}
         <div
           className="glass flex items-center !rounded-full overflow-hidden text-sm font-medium"
@@ -29,8 +29,8 @@ export function ControlPanel({
         >
           <button
             onClick={onZoomToAll}
-            className="flex items-center gap-2 py-2"
-            style={{ paddingRight: '10px', minWidth: '92px' }}
+            className="flex items-center gap-2 py-2 flex-1"
+            style={{ paddingRight: '10px' }}
             title="Zoom to all pins"
             aria-label={`${pinCount} pins - click to zoom to all`}
           >
@@ -51,17 +51,30 @@ export function ControlPanel({
           </button>
         </div>
 
-        {/* Upload Button */}
-        <button
-          onClick={onImport}
-          className="btn glass py-2 text-sm font-medium flex items-center !justify-start gap-2 !rounded-full"
-          title="Load pins from file"
-          aria-label="Load pins from file"
-          style={{ width: '100%', paddingLeft: '11px', paddingRight: '14px' }}
-        >
-          <span className="w-5 h-5 flex-shrink-0 flex items-center justify-center"><File className="w-5 h-5" strokeWidth={1} /></span>
-          <span className="truncate">{uploadedFileName || 'Load'}</span>
-        </button>
+        {/* Load + Save Row */}
+        <div className="flex gap-2">
+          <button
+            onClick={onImport}
+            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full flex-1 min-w-0"
+            style={{ paddingLeft: '11px', paddingRight: '11px' }}
+            title="Load pins from file"
+            aria-label="Load pins from file"
+          >
+            <File className="w-5 h-5 flex-shrink-0" strokeWidth={1} />
+            <span className="truncate">{uploadedFileName || 'Load'}</span>
+          </button>
+
+          <button
+            onClick={onExport}
+            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full flex-1 min-w-0"
+            style={{ paddingLeft: '11px', paddingRight: '11px' }}
+            title="Save pins to file"
+            aria-label="Save pins to file"
+          >
+            <Save className="w-5 h-5 flex-shrink-0" strokeWidth={1} />
+            <span>Save</span>
+          </button>
+        </div>
 
         {/* Icon-Only Buttons Row */}
         <div className="flex gap-2">
@@ -85,15 +98,6 @@ export function ControlPanel({
             ) : (
               <Moon className="w-5 h-5" strokeWidth={1} />
             )}
-          </button>
-
-          <button
-            onClick={onExport}
-            className="btn btn-icon glass"
-            title="Export pins"
-            aria-label="Export pins to file"
-          >
-            <Download className="w-5 h-5" strokeWidth={1} />
           </button>
         </div>
       </div>
