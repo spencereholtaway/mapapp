@@ -16,12 +16,12 @@ export function PinDialog({ pin, onDelete, onClose }) {
 
   const droppedDate = new Date(pin.id)
   const formattedDate = droppedDate.toLocaleDateString('en-US', {
-    month: '1-digit',
-    day: '2-digit',
+    month: 'numeric',
+    day: 'numeric',
     year: '2-digit'
   })
   const formattedTime = droppedDate.toLocaleTimeString('en-US', {
-    hour: '2-digit',
+    hour: 'numeric',
     minute: '2-digit',
     hour12: true
   })
