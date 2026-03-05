@@ -83,7 +83,7 @@ export default function App() {
   const handleMyLocation = () => {
     if (location) {
       setMapCenter([location.latitude, location.longitude])
-      setMapZoom(15)
+      setMapZoom(18)
     }
   }
 
