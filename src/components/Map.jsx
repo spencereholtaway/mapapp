@@ -1,28 +1,25 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-const LocationMarker = ({ location }) => {
-  const map = useMap()
-
-  useEffect(() => {
-    if (location) {
-      // Don't auto-center, but update marker position
-    }
-  }, [location, map])
+const LocationMarker = ({ location, isDark }) => {
+  const icon = useMemo(() => {
+    const c = isDark ? 'white' : 'black'
+    return L.icon({
+      iconUrl: `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><circle cx='12' cy='12' r='2.5' fill='${c}'/><circle cx='12' cy='12' r='6' stroke='${c}' stroke-width='1.5'/><line x1='12' y1='1' x2='12' y2='4' stroke='${c}' stroke-width='1.5' stroke-linecap='round'/><line x1='12' y1='20' x2='12' y2='23' stroke='${c}' stroke-width='1.5' stroke-linecap='round'/><line x1='1' y1='12' x2='4' y2='12' stroke='${c}' stroke-width='1.5' stroke-linecap='round'/><line x1='20' y1='12' x2='23' y2='12' stroke='${c}' stroke-width='1.5' stroke-linecap='round'/></svg>`,
+      iconSize: [24, 24],
+      iconAnchor: [12, 12]
+    })
+  }, [isDark])
 
   if (!location) return null
 
   return (
     <Marker
       position={[location.latitude, location.longitude]}
-      icon={L.icon({
-        iconUrl: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2322c55e"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10" fill="none" stroke="%2322c55e" stroke-width="2" opacity="0.5"/></svg>',
-        iconSize: [24, 24],
-        iconAnchor: [12, 12]
-      })}
+      icon={icon}
       pane="shadowPane"
     >
       <Popup>Your current location</Popup>
@@ -64,9 +61,9 @@ export function Map({
   const mapRef = useRef(null)
 
   // Tile layer URLs
+  // Light: hardcode @2x so 512px tiles render at 256px CSS = perfect 1:1 on 2x retina
   const MAPTILER_KEY = '4VoqoKK7G2HVhGvf8EsC'
-  // {r} is replaced with @2x on retina displays (detectRetina + tileSize/zoomOffset handle HiDPI)
-  const lightTileUrl = `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}{r}.png?key=${MAPTILER_KEY}`
+  const lightTileUrl = `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}@2x.png?key=${MAPTILER_KEY}`
   const darkTileUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
   const tileUrl = isDark ? darkTileUrl : lightTileUrl
 
@@ -84,9 +81,8 @@ export function Map({
       <TileLayer
         attribution={isDark ? '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' : '&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
         url={tileUrl}
-        tileSize={512}
-        zoomOffset={-1}
-        detectRetina={true}
+        tileSize={256}
+        detectRetina={isDark}
         maxZoom={isDark ? 19 : 22}
       />
 
@@ -100,7 +96,7 @@ export function Map({
       <PinMarkers pins={pins} onPinClick={onPinClick} onDeletePin={onDeletePin} />
 
       {/* Location marker - rendered last so it appears underneath */}
-      <LocationMarker location={location} />
+      <LocationMarker location={location} isDark={isDark} />
 
       {/* Click handler for map */}
       <MapClickHandler onMapClick={onMapClick} />
