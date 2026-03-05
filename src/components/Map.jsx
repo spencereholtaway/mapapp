@@ -124,6 +124,14 @@ function MapClickHandler({ onMapClick }) {
 function MapUpdater({ mapCenter, mapZoom, onMapZoomChange }) {
   const map = useMap()
 
+  // Leaflet captures container size at mount time. If the browser hasn't
+  // finished layout yet (common on first load), the map renders at the wrong
+  // height. invalidateSize() forces a recalculation after layout settles.
+  useEffect(() => {
+    const t = setTimeout(() => map.invalidateSize(), 100)
+    return () => clearTimeout(t)
+  }, [map])
+
   useEffect(() => {
     if (mapCenter && mapZoom) {
       map.setView([mapCenter[0], mapCenter[1]], mapZoom, { animate: true })
