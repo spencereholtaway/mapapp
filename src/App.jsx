@@ -35,8 +35,11 @@ export default function App() {
   // Handle pin click to show dialog
   const handlePinClick = (pin) => {
     setSelectedPin(pin)
-    // Center map on pin (mobile only, but we center anyway)
-    setMapCenter([pin.latitude, pin.longitude])
+    // On desktop, center on pin via mapCenter state.
+    // On mobile, PinMarkers handles offset centering directly via useMap().
+    if (window.innerWidth >= 768) {
+      setMapCenter([pin.latitude, pin.longitude])
+    }
   }
 
   // Handle cluster click to zoom in

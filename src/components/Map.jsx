@@ -97,46 +97,7 @@ export function Map({
       <MapBoundsFitter pins={pins} shouldFitBounds={shouldFitBounds} onFitBoundsDone={onFitBoundsDone} />
 
       {/* Clustered pin markers */}
-      <MarkerClusterGroup
-        chunkedLoading
-        maxClusterRadius={60}
-        disableClusteringAtZoom={18}
-        showCoverageOnHover={false}
-        iconCreateFunction={createClusterIcon}
-      >
-        {pins.map((pin) => (
-          <Marker
-            key={pin.id}
-            position={[pin.latitude, pin.longitude]}
-            icon={pinIcon}
-            eventHandlers={{
-              click: () => onPinClick(pin)
-            }}
-          >
-            <Tooltip
-              direction="top"
-              offset={[0, -12]}
-              className="pin-tooltip"
-              opacity={1}
-              interactive={true}
-            >
-              <div className="pin-tooltip-content">
-                <div className="pin-tooltip-header">
-                  <span className="pin-tooltip-icon">📍</span>
-                  <strong>Saved Pin</strong>
-                </div>
-                <div className="pin-tooltip-coords">
-                  <div><span className="pin-tooltip-label">Lat</span> {pin.latitude.toFixed(6)}</div>
-                  <div><span className="pin-tooltip-label">Lng</span> {pin.longitude.toFixed(6)}</div>
-                </div>
-                <button className="pin-tooltip-delete" onClick={(e) => { e.stopPropagation(); onDeletePin(pin.id); }}>
-                  🗑️ Delete
-                </button>
-              </div>
-            </Tooltip>
-          </Marker>
-        ))}
-      </MarkerClusterGroup>
+      <PinMarkers pins={pins} onPinClick={onPinClick} onDeletePin={onDeletePin} />
 
       {/* Location marker - rendered last so it appears underneath */}
       <LocationMarker location={location} />
@@ -198,6 +159,70 @@ function MapUpdater({ mapCenter, mapZoom, onMapZoomChange }) {
   }, [map, onMapZoomChange])
 
   return null
+}
+
+function PinMarkers({ pins, onPinClick, onDeletePin }) {
+  const map = useMap()
+
+  const handlePinClick = (pin) => {
+    onPinClick(pin)
+
+    // On mobile, offset the center so the pin appears in the visible area above the bottom sheet
+    if (window.innerWidth < 768) {
+      const containerHeight = map.getContainer().offsetHeight
+      const pinPoint = map.latLngToContainerPoint([pin.latitude, pin.longitude])
+      // Shift pin up by ~25% of container height to center it in the visible area above the sheet
+      const offset = containerHeight * 0.25
+      const adjustedPoint = L.point(pinPoint.x, pinPoint.y + offset)
+      const newCenter = map.containerPointToLatLng(adjustedPoint)
+      map.setView(newCenter, map.getZoom(), { animate: true })
+    } else {
+      map.setView([pin.latitude, pin.longitude], map.getZoom(), { animate: true })
+    }
+  }
+
+  return (
+    <MarkerClusterGroup
+      chunkedLoading
+      maxClusterRadius={60}
+      disableClusteringAtZoom={18}
+      showCoverageOnHover={false}
+      iconCreateFunction={createClusterIcon}
+    >
+      {pins.map((pin) => (
+        <Marker
+          key={pin.id}
+          position={[pin.latitude, pin.longitude]}
+          icon={pinIcon}
+          eventHandlers={{
+            click: () => handlePinClick(pin)
+          }}
+        >
+          <Tooltip
+            direction="top"
+            offset={[0, -12]}
+            className="pin-tooltip"
+            opacity={1}
+            interactive={true}
+          >
+            <div className="pin-tooltip-content">
+              <div className="pin-tooltip-header">
+                <span className="pin-tooltip-icon">📍</span>
+                <strong>Saved Pin</strong>
+              </div>
+              <div className="pin-tooltip-coords">
+                <div><span className="pin-tooltip-label">Lat</span> {pin.latitude.toFixed(6)}</div>
+                <div><span className="pin-tooltip-label">Lng</span> {pin.longitude.toFixed(6)}</div>
+              </div>
+              <button className="pin-tooltip-delete" onClick={(e) => { e.stopPropagation(); onDeletePin(pin.id); }}>
+                🗑️ Delete
+              </button>
+            </div>
+          </Tooltip>
+        </Marker>
+      ))}
+    </MarkerClusterGroup>
+  )
 }
 
 function MapBoundsFitter({ pins, shouldFitBounds, onFitBoundsDone }) {
