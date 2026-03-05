@@ -1,17 +1,6 @@
-import { useEffect, useState } from 'react'
+import { MapPin, Trash2 } from 'lucide-react'
 
 export function PinDialog({ pin, onDelete, onClose }) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
   const handleDelete = () => {
     onDelete(pin.id)
     onClose()
@@ -23,10 +12,23 @@ export function PinDialog({ pin, onDelete, onClose }) {
     }
   }
 
-  if (isMobile) {
-    return (
+  const droppedDate = new Date(pin.id)
+  const formattedDate = droppedDate.toLocaleDateString('en-US', {
+    month: '1-digit',
+    day: '2-digit',
+    year: '2-digit'
+  })
+  const formattedTime = droppedDate.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  })
+
+  return (
+    <>
+      {/* Mobile Bottom Sheet */}
       <div
-        className="bottom-sheet"
+        className="bottom-sheet md:hidden"
         onClick={handleClickOutside}
       >
         <div className="flex flex-col gap-4">
@@ -62,43 +64,49 @@ export function PinDialog({ pin, onDelete, onClose }) {
           </div>
         </div>
       </div>
-    )
-  }
 
-  return (
-    <div
-      className="dialog-overlay"
-      onClick={handleClickOutside}
-    >
-      <div className="dialog">
-        <h2 className="text-lg font-semibold mb-4">Pin Details</h2>
-
-        <div className="space-y-3 mb-4">
-          <div>
-            <label className="text-text-secondary text-xs uppercase tracking-wide">Latitude</label>
-            <p className="font-mono">{pin.latitude.toFixed(6)}</p>
+      {/* Desktop Card Popup */}
+      <div
+        className="hidden md:flex fixed inset-0 z-50 items-center justify-center"
+        onClick={handleClickOutside}
+      >
+        <div className="glass rounded-lg p-6 w-80 shadow-xl">
+          {/* Pin Icon */}
+          <div className="flex justify-center mb-4">
+            <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
+              <MapPin className="w-6 h-6 text-white" strokeWidth={1} />
+            </div>
           </div>
-          <div>
-            <label className="text-text-secondary text-xs uppercase tracking-wide">Longitude</label>
-            <p className="font-mono">{pin.longitude.toFixed(6)}</p>
-          </div>
-        </div>
 
-        <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-gray-700">
-          <button
-            onClick={onClose}
-            className="btn flex-1"
-          >
-            Close
-          </button>
+          {/* Title */}
+          <h2 className="text-lg font-semibold text-center mb-4">Saved Pin</h2>
+
+          {/* Details */}
+          <div className="space-y-3 mb-6">
+            <div>
+              <label className="text-text-secondary text-xs uppercase tracking-wide">Dropped</label>
+              <p className="text-sm">{formattedDate}, {formattedTime}</p>
+            </div>
+            <div>
+              <label className="text-text-secondary text-xs uppercase tracking-wide">Latitude</label>
+              <p className="font-mono text-sm">{pin.latitude.toFixed(6)}</p>
+            </div>
+            <div>
+              <label className="text-text-secondary text-xs uppercase tracking-wide">Longitude</label>
+              <p className="font-mono text-sm">{pin.longitude.toFixed(6)}</p>
+            </div>
+          </div>
+
+          {/* Delete Button */}
           <button
             onClick={handleDelete}
-            className="btn flex-1 bg-red-500 hover:bg-red-600 text-white border-red-600"
+            className="w-full btn bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900 flex items-center justify-center gap-2"
           >
-            Delete
+            <Trash2 className="w-4 h-4" strokeWidth={1} />
+            Delete Pin
           </button>
         </div>
       </div>
-    </div>
+    </>
   )
 }
