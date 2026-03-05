@@ -59,7 +59,8 @@
       "Bash(git commit -m \"Deploy from main branch using docs folder\")",
       "Bash(head -50 \"/Volumes/SSD/ViBe CoDeZ/Maps \\(claude code\\)/src/styles/globals.css\")",
       "Bash(git add -A)",
-      "Bash(git commit -m \"Change icon weights to 1px and implement fitBounds zoom for pins\")"
+      "Bash(git commit -m \"Change icon weights to 1px and implement fitBounds zoom for pins\")",
+      "Bash(git commit -m \"Remove maxZoom restriction on fitBounds\")"
     ]
   }
 }

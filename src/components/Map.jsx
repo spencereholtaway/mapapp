@@ -181,7 +181,7 @@ function MapBoundsFitter({ pins, shouldFitBounds, onFitBoundsDone }) {
       )
 
       // Fit map to bounds with padding
-      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 17 })
+      map.fitBounds(bounds, { padding: [50, 50] })
 
       // Notify parent that fit bounds is complete
       onFitBoundsDone()
