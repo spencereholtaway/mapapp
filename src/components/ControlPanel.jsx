@@ -56,7 +56,7 @@ export function ControlPanel({
           <button
             onClick={onImport}
             className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full !justify-start"
-            style={{ paddingLeft: '11px', paddingRight: '11px', maxWidth: uploadedFileName ? '130px' : 'none' }}
+            style={{ paddingLeft: '11px', paddingRight: '19px', maxWidth: uploadedFileName ? '130px' : 'none' }}
             title="Load pins from file"
             aria-label="Load pins from file"
           >
@@ -67,7 +67,7 @@ export function ControlPanel({
           <button
             onClick={onExport}
             className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full !justify-start"
-            style={{ paddingLeft: '11px', paddingRight: '11px' }}
+            style={{ paddingLeft: '11px', paddingRight: '19px' }}
             title="Save pins to file"
             aria-label="Save pins to file"
           >
