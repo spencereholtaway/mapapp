@@ -384,14 +384,10 @@ html.dark .bottom-sheet {
   border-top-color: var(--bg-secondary) !important;
 }
 
-/* Invisible bridge between tooltip and marker so mouse doesn't lose hover */
-.pin-tooltip::after {
-  content: '';
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  right: 0;
-  height: 20px;
+/* Extend tooltip hover area downward to bridge gap to marker */
+.pin-tooltip {
+  padding-bottom: 18px !important;
+  margin-bottom: -18px !important;
 }
 
 .pin-tooltip-content {
