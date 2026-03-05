@@ -52,6 +52,12 @@ export function usePins() {
     })
   }, [])
 
+  // Delete all pins
+  const deleteAllPins = useCallback(() => {
+    savePins([])
+    setPins([])
+  }, [])
+
   // Get clustered data for current map bounds and zoom
   const getClusters = useCallback((bounds, zoom) => {
     // Update cluster with current pins
@@ -146,6 +152,7 @@ export function usePins() {
     pins,
     addPin,
     deletePin,
+    deleteAllPins,
     importPins,
     getClusters,
     getZoomForAllPins,

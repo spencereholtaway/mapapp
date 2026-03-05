@@ -9,7 +9,7 @@ import { usePins } from './hooks/usePins'
 export default function App() {
   const { isDark, toggleTheme } = useTheme()
   const { location, error: locationError, isLoading: locationLoading } = useGeolocation()
-  const { pins, addPin, deletePin, importPins, getZoomForAllPins, getCenterForAllPins, exportToPinFormat, pinCount } = usePins()
+  const { pins, addPin, deletePin, deleteAllPins, importPins, getZoomForAllPins, getCenterForAllPins, exportToPinFormat, pinCount } = usePins()
 
   const [selectedPin, setSelectedPin] = useState(null)
   const [uploadedFileName, setUploadedFileName] = useState(null)
@@ -156,6 +156,7 @@ export default function App() {
         onExport={handleExport}
         onImport={handleImport}
         uploadedFileName={uploadedFileName}
+        onDeleteAll={deleteAllPins}
       />
 
       {/* Pin Dialog */}
