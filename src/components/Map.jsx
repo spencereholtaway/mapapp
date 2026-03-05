@@ -226,6 +226,16 @@ function PinMarkers({ pins, onPinClick, onDeletePin }) {
                 <div><span className="pin-tooltip-label">Lat</span> {pin.latitude.toFixed(6)}</div>
                 <div><span className="pin-tooltip-label">Lng</span> {pin.longitude.toFixed(6)}</div>
               </div>
+              {pin.timestamp && (() => {
+                const d = new Date(pin.timestamp)
+                return (
+                  <div className="pin-tooltip-datetime">
+                    {d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}
+                    {' · '}
+                    {d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                  </div>
+                )
+              })()}
               <div className="pin-tooltip-hint">Click to delete</div>
             </div>
           </Tooltip>

@@ -65,6 +65,18 @@ export function PinDialog({ pin, onDelete, onClose }) {
             </div>
           </div>
 
+          {/* Date/Time (only shown if available) */}
+          {pin.timestamp && (() => {
+            const d = new Date(pin.timestamp)
+            return (
+              <div className="text-gray-500 dark:text-gray-400 text-sm">
+                <span>{d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                <span className="mx-2">·</span>
+                <span>{d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+              </div>
+            )
+          })()}
+
           {/* Delete Button */}
           <button
             onClick={handleDelete}

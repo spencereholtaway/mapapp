@@ -458,6 +458,14 @@ html.dark .bottom-sheet {
   font-family: Inter, system-ui, -apple-system, sans-serif;
 }
 
+.pin-tooltip-datetime {
+  margin-top: 5px;
+  font-size: 11px;
+  opacity: 0.65;
+  text-align: center;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+
 .pin-tooltip-hint {
   margin-top: 6px;
   font-size: 11px;
