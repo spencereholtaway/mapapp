@@ -8,7 +8,7 @@ import { usePins } from './hooks/usePins'
 
 export default function App() {
   const { isDark, toggleTheme } = useTheme()
-  const { location, error: locationError, isLoading: locationLoading } = useGeolocation()
+  const { location, error: locationError, isLoading: locationLoading, permissionDenied, retryLocation } = useGeolocation()
   const { pins, addPin, deletePin, deleteAllPins, importPins, getZoomForAllPins, getCenterForAllPins, exportToPinFormat, pinCount } = usePins()
 
   const [selectedPin, setSelectedPin] = useState(null)
@@ -139,9 +139,29 @@ export default function App() {
       )}
 
       {/* Show location error */}
-      {locationError && !location && (
-        <div className="absolute top-4 right-4 z-40 glass px-4 py-2 rounded-lg text-sm text-red-500 border-red-500">
-          {locationError}
+      {locationError && !location && !locationLoading && (
+        <div className="absolute top-4 right-4 z-40 glass px-3 py-3 rounded-xl text-sm max-w-[220px]" style={{ borderColor: 'rgba(239,68,68,0.4)', borderWidth: 1 }}>
+          <p className="font-semibold text-red-500 mb-1">Location unavailable</p>
+          {permissionDenied ? (
+            <>
+              <p className="text-xs opacity-70 mb-2">
+                Permission was denied. On iPhone: <strong>Settings → Privacy → Location Services → Safari</strong> and set to Allow.
+              </p>
+              <button
+                onClick={retryLocation}
+                className="text-xs underline opacity-60 hover:opacity-100"
+              >
+                Retry
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={retryLocation}
+              className="text-xs underline opacity-60 hover:opacity-100"
+            >
+              Tap to retry
+            </button>
+          )}
         </div>
       )}
 
