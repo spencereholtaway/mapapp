@@ -34,7 +34,7 @@ const pinIcon = L.divIcon({
   html: '<div class="pin-pulse"><div class="pin-dot"></div><div class="pin-ring"></div></div>',
   iconSize: [24, 24],
   iconAnchor: [12, 12],
-  className: ''
+  className: 'pin-marker-icon'
 })
 
 const createClusterIcon = (cluster) => {

@@ -385,14 +385,17 @@ html.dark .bottom-sheet {
   border-top-color: var(--bg-secondary) !important;
 }
 
-/* Invisible bridge below tooltip to cover gap between tooltip and marker */
-.pin-tooltip::after {
+/* Extend pin marker hover area upward to bridge gap between marker and tooltip */
+.pin-marker-icon {
+  overflow: visible !important;
+}
+.pin-marker-icon::before {
   content: '';
   position: absolute;
-  bottom: -22px;
-  left: 0;
-  right: 0;
-  height: 22px;
+  top: -44px;
+  left: -8px;
+  right: -8px;
+  height: 44px;
 }
 
 .pin-tooltip-content {
