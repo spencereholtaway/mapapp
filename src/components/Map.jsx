@@ -65,7 +65,8 @@ export function Map({
 
   // Tile layer URLs
   const MAPTILER_KEY = '4VoqoKK7G2HVhGvf8EsC'
-  const lightTileUrl = `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`
+  // {r} is replaced with @2x on retina displays (detectRetina + tileSize/zoomOffset handle HiDPI)
+  const lightTileUrl = `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}{r}.png?key=${MAPTILER_KEY}`
   const darkTileUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
   const tileUrl = isDark ? darkTileUrl : lightTileUrl
 
@@ -83,6 +84,9 @@ export function Map({
       <TileLayer
         attribution={isDark ? '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' : '&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
         url={tileUrl}
+        tileSize={512}
+        zoomOffset={-1}
+        detectRetina={true}
         maxZoom={isDark ? 19 : 22}
       />
 

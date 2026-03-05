@@ -21,7 +21,7 @@ export function ControlPanel({
 
   return (
     <>
-      <div className="absolute top-4 left-4 z-40 flex flex-col gap-2" style={{ width: '176px' }}>
+      <div className="absolute top-4 left-4 z-40 flex flex-col gap-2" style={{ width: '220px' }}>
         {/* Pin Count - Split Pill Button */}
         <div
           className="glass flex items-center !rounded-full overflow-hidden text-sm font-medium"
@@ -61,7 +61,7 @@ export function ControlPanel({
             aria-label="Load pins from file"
           >
             <File className="w-5 h-5 flex-shrink-0" strokeWidth={1} />
-            <span className="truncate">{uploadedFileName || 'Load'}</span>
+            <span className={uploadedFileName ? 'truncate' : ''}>{uploadedFileName || 'Load'}</span>
           </button>
 
           <button
