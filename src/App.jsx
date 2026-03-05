@@ -233,11 +233,11 @@ export default function App() {
         onClose={handleDialogClose}
       />
 
-      {/* Mobile: Drop Pin at Current Location FAB */}
+      {/* Drop Pin at Current Location FAB */}
       {location && !selectedPin && (
         <button
           onClick={() => addPin(location.latitude, location.longitude)}
-          className="absolute left-1/2 -translate-x-1/2 z-40 md:hidden btn glass !rounded-full px-5 py-2.5 flex items-center gap-2 text-sm font-medium"
+          className="absolute left-1/2 -translate-x-1/2 z-40 btn glass !rounded-full px-5 py-2.5 flex items-center gap-2 text-sm font-medium"
           style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 96px)' }}
           aria-label="Drop pin at current location"
         >
