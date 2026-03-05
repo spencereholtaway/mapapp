@@ -64,7 +64,8 @@
       "Bash(git commit -m \"Update PinDialog UI: card popup on desktop, bottom-sheet on mobile\")",
       "Bash(git commit -m \"Update mobile PinDialog design with slide-up tray\")",
       "Bash(git commit -m \"Change desktop pin dialog to small tooltip popup instead of fullscreen modal\")",
-      "Bash(git commit -m \"Fix desktop pin dialog rendering with proper modal overlay\")"
+      "Bash(git commit -m \"Fix desktop pin dialog rendering with proper modal overlay\")",
+      "Bash(git commit -m \"Add click handlers to desktop pin dialog\")"
     ]
   }
 }

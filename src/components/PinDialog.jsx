@@ -73,8 +73,8 @@ export function PinDialog({ pin, onDelete, onClose }) {
       </div>
 
       {/* Desktop Tooltip Popup */}
-      <div className="hidden md:flex fixed inset-0 z-40 items-center justify-center bg-black/20">
-        <div className="glass rounded-lg p-5 w-72 shadow-xl relative">
+      <div className="hidden md:flex fixed inset-0 z-40 items-center justify-center bg-black/20" onClick={handleClickOutside}>
+        <div className="glass rounded-lg p-5 w-72 shadow-xl relative" onClick={(e) => e.stopPropagation()}>
           {/* Close Button */}
           <button
             onClick={onClose}
