@@ -13,7 +13,6 @@ export default function App() {
   const { pins, addPin, deletePin, deleteAllPins, importPins, getZoomForAllPins, getCenterForAllPins, exportToPinFormat, pinCount } = usePins()
 
   const [selectedPin, setSelectedPin] = useState(null)
-  const [uploadedFileName, setUploadedFileName] = useState(null)
   const prevMapPositionRef = useRef(null)  // position before mobile offset centering
   const shouldRestoreRef = useRef(false)
   const [mapCenter, setMapCenter] = useState(null)
@@ -119,7 +118,6 @@ export default function App() {
       reader.onload = (event) => {
         const count = importPins(event.target.result)
         if (count > 0) {
-          setUploadedFileName(file.name)
           setShouldFitBounds(true)
         }
       }
@@ -218,7 +216,6 @@ export default function App() {
         onZoomToAll={handleZoomToAll}
         onExport={handleExport}
         onImport={handleImport}
-        uploadedFileName={uploadedFileName}
         onDeleteAll={deleteAllPins}
       />
 

@@ -9,7 +9,6 @@ export function ControlPanel({
   onZoomToAll,
   onExport,
   onImport,
-  uploadedFileName,
   onDeleteAll
 }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -56,12 +55,12 @@ export function ControlPanel({
           <button
             onClick={onImport}
             className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full !justify-start"
-            style={{ paddingLeft: '11px', paddingRight: '19px', maxWidth: uploadedFileName ? '130px' : 'none' }}
+            style={{ paddingLeft: '11px', paddingRight: '19px' }}
             title="Load pins from file"
             aria-label="Load pins from file"
           >
             <File className="w-5 h-5 flex-shrink-0" strokeWidth={1} />
-            <span className={uploadedFileName ? 'truncate' : ''}>{uploadedFileName || 'Load'}</span>
+            <span>Load</span>
           </button>
 
           <button
