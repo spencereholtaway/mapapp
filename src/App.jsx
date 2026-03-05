@@ -216,7 +216,7 @@ export default function App() {
           aria-label="Drop pin at current location"
         >
           <MapPinPlus className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
-          Drop Pin Here
+          Drop Pin at My Location
         </button>
       )}
     </div>
