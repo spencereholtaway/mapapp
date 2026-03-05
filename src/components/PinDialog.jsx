@@ -43,10 +43,14 @@ export function PinDialog({ pin, onDelete, onClose, hoveredPin, hoveredPinPositi
   if (!isDesktop && pin) {
     return (
       <div
-        className="bottom-sheet"
+        className="fixed inset-0 z-40"
         onClick={handleClickOutside}
       >
-        <div className="flex flex-col gap-6">
+        <div
+          className="bottom-sheet"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex flex-col gap-6">
           {/* Drag Handle */}
           <div className="flex-shrink-0 h-1 w-12 bg-gray-400 rounded-full mx-auto opacity-40" />
 
@@ -83,6 +87,7 @@ export function PinDialog({ pin, onDelete, onClose, hoveredPin, hoveredPinPositi
             <Trash2 className="w-5 h-5" strokeWidth={1} />
             Delete This Pin
           </button>
+        </div>
         </div>
       </div>
     )
