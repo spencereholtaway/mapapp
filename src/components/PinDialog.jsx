@@ -72,42 +72,51 @@ export function PinDialog({ pin, onDelete, onClose }) {
         </div>
       </div>
 
-      {/* Desktop Card Popup */}
-      <div
-        className="hidden md:flex fixed inset-0 z-50 items-center justify-center"
-        onClick={handleClickOutside}
-      >
-        <div className="glass rounded-lg p-6 w-80 shadow-xl">
-          {/* Pin Icon */}
-          <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
-              <MapPin className="w-6 h-6 text-white" strokeWidth={1} />
+      {/* Desktop Tooltip Popup */}
+      <div className="hidden md:block fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
+        <div
+          className="glass rounded-lg p-5 w-72 shadow-xl pointer-events-auto relative"
+          style={{
+            background: 'rgba(255, 255, 255, 0.8)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(0, 0, 0, 0.1)'
+          }}
+        >
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gray-300 hover:bg-gray-400 flex items-center justify-center text-gray-700"
+          >
+            ✕
+          </button>
+
+          {/* Header with Icon and Title */}
+          <div className="flex gap-3 mb-4">
+            <div className="w-10 h-10 flex-shrink-0 rounded-full bg-blue-400 flex items-center justify-center">
+              <MapPin className="w-5 h-5 text-white" strokeWidth={1} />
+            </div>
+            <div>
+              <h2 className="text-base font-semibold">Saved Pin</h2>
+              <p className="text-xs text-gray-500">Dropped: {formattedDate}, {formattedTime}</p>
             </div>
           </div>
 
-          {/* Title */}
-          <h2 className="text-lg font-semibold text-center mb-4">Saved Pin</h2>
-
           {/* Details */}
-          <div className="space-y-3 mb-6">
+          <div className="space-y-2 mb-4 text-sm">
             <div>
-              <label className="text-text-secondary text-xs uppercase tracking-wide">Dropped</label>
-              <p className="text-sm">{formattedDate}, {formattedTime}</p>
+              <label className="text-gray-600 text-xs uppercase tracking-wide">Latitude</label>
+              <p className="font-mono text-gray-800">{pin.latitude.toFixed(6)}</p>
             </div>
             <div>
-              <label className="text-text-secondary text-xs uppercase tracking-wide">Latitude</label>
-              <p className="font-mono text-sm">{pin.latitude.toFixed(6)}</p>
-            </div>
-            <div>
-              <label className="text-text-secondary text-xs uppercase tracking-wide">Longitude</label>
-              <p className="font-mono text-sm">{pin.longitude.toFixed(6)}</p>
+              <label className="text-gray-600 text-xs uppercase tracking-wide">Longitude</label>
+              <p className="font-mono text-gray-800">{pin.longitude.toFixed(6)}</p>
             </div>
           </div>
 
           {/* Delete Button */}
           <button
             onClick={handleDelete}
-            className="w-full btn bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900 flex items-center justify-center gap-2"
+            className="w-full btn bg-red-50 text-red-600 border-red-200 hover:bg-red-100 flex items-center justify-center gap-2 py-2 text-sm"
           >
             <Trash2 className="w-4 h-4" strokeWidth={1} />
             Delete Pin
