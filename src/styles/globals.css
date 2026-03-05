@@ -374,6 +374,7 @@ html.dark .bottom-sheet {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
   backdrop-filter: blur(12px) saturate(1.2);
   -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  overflow: visible !important;
 }
 
 .pin-tooltip .leaflet-tooltip-content {
@@ -384,10 +385,14 @@ html.dark .bottom-sheet {
   border-top-color: var(--bg-secondary) !important;
 }
 
-/* Extend tooltip hover area downward to bridge gap to marker */
-.pin-tooltip {
-  padding-bottom: 18px !important;
-  margin-bottom: -18px !important;
+/* Invisible bridge below tooltip to cover gap between tooltip and marker */
+.pin-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  right: 0;
+  height: 22px;
 }
 
 .pin-tooltip-content {
