@@ -82,6 +82,7 @@ export function Map({
         attribution={isDark ? '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' : '&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
         url={tileUrl}
         tileSize={512}
+        zoomOffset={-1}
         maxZoom={isDark ? 19 : 22}
       />
 
@@ -160,19 +161,18 @@ function PinMarkers({ pins, onPinClick, onDeletePin }) {
   const map = useMap()
 
   const handlePinClick = (pin) => {
-    onPinClick(pin)
-
-    // On mobile, offset the center so the pin appears in the visible area above the bottom sheet
     if (window.innerWidth < 768) {
+      // Mobile: show bottom sheet + offset center above it
+      onPinClick(pin)
       const containerHeight = map.getContainer().offsetHeight
       const pinPoint = map.latLngToContainerPoint([pin.latitude, pin.longitude])
-      // Shift pin up by ~25% of container height to center it in the visible area above the sheet
       const offset = containerHeight * 0.25
       const adjustedPoint = L.point(pinPoint.x, pinPoint.y + offset)
       const newCenter = map.containerPointToLatLng(adjustedPoint)
       map.setView(newCenter, map.getZoom(), { animate: true })
     } else {
-      map.setView([pin.latitude, pin.longitude], map.getZoom(), { animate: true })
+      // Desktop: click pin to delete it directly
+      onDeletePin(pin.id)
     }
   }
 
@@ -201,17 +201,11 @@ function PinMarkers({ pins, onPinClick, onDeletePin }) {
             interactive={true}
           >
             <div className="pin-tooltip-content">
-              <div className="pin-tooltip-header">
-                <span className="pin-tooltip-icon">📍</span>
-                <strong>Saved Pin</strong>
-              </div>
               <div className="pin-tooltip-coords">
                 <div><span className="pin-tooltip-label">Lat</span> {pin.latitude.toFixed(6)}</div>
                 <div><span className="pin-tooltip-label">Lng</span> {pin.longitude.toFixed(6)}</div>
               </div>
-              <button className="pin-tooltip-delete" onClick={(e) => { e.stopPropagation(); onDeletePin(pin.id); }}>
-                🗑️ Delete
-              </button>
+              <div className="pin-tooltip-hint">Click to delete</div>
             </div>
           </Tooltip>
         </Marker>

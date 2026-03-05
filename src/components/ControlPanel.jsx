@@ -55,7 +55,7 @@ export function ControlPanel({
         <div className="flex gap-2">
           <button
             onClick={onImport}
-            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full flex-1 min-w-0"
+            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full !justify-start flex-1 min-w-0"
             style={{ paddingLeft: '11px', paddingRight: '11px' }}
             title="Load pins from file"
             aria-label="Load pins from file"
@@ -66,7 +66,7 @@ export function ControlPanel({
 
           <button
             onClick={onExport}
-            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full flex-1 min-w-0"
+            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full !justify-start flex-1 min-w-0"
             style={{ paddingLeft: '11px', paddingRight: '11px' }}
             title="Save pins to file"
             aria-label="Save pins to file"

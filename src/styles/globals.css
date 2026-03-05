@@ -434,6 +434,13 @@ html.dark .bottom-sheet {
   font-family: Inter, system-ui, -apple-system, sans-serif;
 }
 
+.pin-tooltip-hint {
+  margin-top: 6px;
+  font-size: 11px;
+  opacity: 0.5;
+  text-align: center;
+}
+
 .pin-tooltip-delete {
   margin-top: 8px;
   width: 100%;
