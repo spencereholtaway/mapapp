@@ -111,6 +111,7 @@ export function Map({
               offset={[0, -12]}
               className="pin-tooltip"
               opacity={1}
+              interactive={true}
             >
               <div className="pin-tooltip-content">
                 <div className="pin-tooltip-header">
@@ -121,6 +122,9 @@ export function Map({
                   <div><span className="pin-tooltip-label">Lat</span> {pin.latitude.toFixed(6)}</div>
                   <div><span className="pin-tooltip-label">Lng</span> {pin.longitude.toFixed(6)}</div>
                 </div>
+                <button className="pin-tooltip-delete" onClick={(e) => { e.stopPropagation(); onDeletePin(pin.id); }}>
+                  🗑️ Delete
+                </button>
               </div>
             </Tooltip>
           </Marker>

@@ -143,6 +143,7 @@ export default function App() {
         isDark={isDark}
         shouldFitBounds={shouldFitBounds}
         onFitBoundsDone={() => setShouldFitBounds(false)}
+        onDeletePin={deletePin}
       />
 
       {/* Control Panel */}

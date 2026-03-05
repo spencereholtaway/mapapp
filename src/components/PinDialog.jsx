@@ -71,7 +71,7 @@ export function PinDialog({ pin, onDelete, onClose }) {
             className="w-full btn bg-red-500 hover:bg-red-600 text-white border-red-600 py-3 rounded-lg flex items-center justify-center gap-2 text-base font-medium"
           >
             <Trash2 className="w-5 h-5" strokeWidth={1} />
-            Delete This Pin
+            Delete
           </button>
         </div>
       </div>

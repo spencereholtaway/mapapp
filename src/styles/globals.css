@@ -419,6 +419,33 @@ html.dark .bottom-sheet {
   font-family: Inter, system-ui, -apple-system, sans-serif;
 }
 
+.pin-tooltip-delete {
+  margin-top: 8px;
+  width: 100%;
+  padding: 4px 0;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  font-size: 11px;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pin-tooltip-delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+html.dark .pin-tooltip-delete {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+html.dark .pin-tooltip-delete:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+
 @media (max-width: 767px) {
   .pin-tooltip {
     display: none !important;
