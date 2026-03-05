@@ -25,7 +25,7 @@ export function ControlPanel({
         {/* Pin Count - Split Pill Button */}
         <div
           className="glass flex items-center !rounded-full overflow-hidden text-sm font-medium"
-          style={{ paddingLeft: '11px' }}
+          style={{ paddingLeft: '11px', minHeight: '44px' }}
         >
           <button
             onClick={onZoomToAll}
