@@ -65,7 +65,7 @@ export function Map({
 
   // Tile layer URLs
   const MAPTILER_KEY = '4VoqoKK7G2HVhGvf8EsC'
-  const lightTileUrl = `https://api.maptiler.com/maps/outdoor-v2/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`
+  const lightTileUrl = `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`
   const darkTileUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
   const tileUrl = isDark ? darkTileUrl : lightTileUrl
 
