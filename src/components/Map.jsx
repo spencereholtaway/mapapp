@@ -46,6 +46,45 @@ const createClusterIcon = (cluster) => {
   })
 }
 
+function PinMarker({ pin, onPinClick, onPinHover, onPinLeave }) {
+  const map = useMap()
+  const markerRef = useRef(null)
+
+  useEffect(() => {
+    if (!markerRef.current) return
+
+    const marker = markerRef.current
+    const handleMouseOver = () => {
+      const latLng = L.latLng(pin.latitude, pin.longitude)
+      const point = map.latLngToContainerPoint(latLng)
+      onPinHover(pin, { x: point.x, y: point.y })
+    }
+
+    const handleMouseOut = () => {
+      onPinLeave()
+    }
+
+    marker.on('mouseover', handleMouseOver)
+    marker.on('mouseout', handleMouseOut)
+
+    return () => {
+      marker.off('mouseover', handleMouseOver)
+      marker.off('mouseout', handleMouseOut)
+    }
+  }, [pin, map, onPinHover, onPinLeave])
+
+  return (
+    <Marker
+      ref={markerRef}
+      position={[pin.latitude, pin.longitude]}
+      icon={pinIcon}
+      eventHandlers={{
+        click: () => onPinClick(pin)
+      }}
+    />
+  )
+}
+
 export function Map({
   location,
   initialZoom = 15,
@@ -58,7 +97,9 @@ export function Map({
   isDark = false,
   onMapZoomChange,
   shouldFitBounds = false,
-  onFitBoundsDone = () => {}
+  onFitBoundsDone = () => {},
+  onPinHover = () => {},
+  onPinLeave = () => {}
 }) {
   const mapRef = useRef(null)
 
@@ -97,13 +138,12 @@ export function Map({
         iconCreateFunction={createClusterIcon}
       >
         {pins.map((pin) => (
-          <Marker
+          <PinMarker
             key={pin.id}
-            position={[pin.latitude, pin.longitude]}
-            icon={pinIcon}
-            eventHandlers={{
-              click: () => onPinClick(pin)
-            }}
+            pin={pin}
+            onPinClick={onPinClick}
+            onPinHover={onPinHover}
+            onPinLeave={onPinLeave}
           />
         ))}
       </MarkerClusterGroup>

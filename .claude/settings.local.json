@@ -69,7 +69,10 @@
       "Bash(git commit -m \"Add console logging and fix desktop layout\")",
       "Bash(git commit -m \"Fix date formatting options for PinDialog\")",
       "Bash(git commit -m \"Simplify PinDialog by removing date formatting\")",
-      "Bash(git commit -m \"Fix desktop modal structure to prevent white screen\")"
+      "Bash(git commit -m \"Fix desktop modal structure to prevent white screen\")",
+      "Bash(/usr/local/bin/npm --version)",
+      "Bash(echo $SHELL)",
+      "Bash(source ~/.zshrc)"
     ]
   }
 }

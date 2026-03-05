@@ -12,6 +12,8 @@ export default function App() {
   const { pins, addPin, deletePin, importPins, getZoomForAllPins, getCenterForAllPins, exportToPinFormat, pinCount } = usePins()
 
   const [selectedPin, setSelectedPin] = useState(null)
+  const [hoveredPin, setHoveredPin] = useState(null)
+  const [hoveredPinPosition, setHoveredPinPosition] = useState(null)
   const [uploadedFileName, setUploadedFileName] = useState(null)
   const [mapCenter, setMapCenter] = useState(null)
   const [mapZoom, setMapZoom] = useState(15)
@@ -25,14 +27,18 @@ export default function App() {
   }, [location, mapCenter])
 
 
-  // Handle map click to add pins
+  // Handle map click to add pins (disabled while dialog is open)
   const handleMapClick = (coords) => {
+    // Don't add pins while a dialog is open on mobile
+    if (selectedPin) return
     addPin(coords.latitude, coords.longitude)
   }
 
   // Handle pin click to show dialog
   const handlePinClick = (pin) => {
     setSelectedPin(pin)
+    // Center map on pin (mobile only, but we center anyway)
+    setMapCenter([pin.latitude, pin.longitude])
   }
 
   // Handle cluster click to zoom in
@@ -61,6 +67,18 @@ export default function App() {
     }
 
     setShouldFitBounds(true)
+  }
+
+  // Handle pin hover
+  const handlePinHover = (pin, position) => {
+    setHoveredPin(pin)
+    setHoveredPinPosition(position)
+  }
+
+  // Handle pin hover leave
+  const handlePinLeave = () => {
+    setHoveredPin(null)
+    setHoveredPinPosition(null)
   }
 
   // Handle theme toggle
@@ -139,6 +157,8 @@ export default function App() {
         isDark={isDark}
         shouldFitBounds={shouldFitBounds}
         onFitBoundsDone={() => setShouldFitBounds(false)}
+        onPinHover={handlePinHover}
+        onPinLeave={handlePinLeave}
       />
 
       {/* Control Panel */}
@@ -154,13 +174,14 @@ export default function App() {
       />
 
       {/* Pin Dialog */}
-      {selectedPin && (
-        <PinDialog
-          pin={selectedPin}
-          onDelete={deletePin}
-          onClose={() => setSelectedPin(null)}
-        />
-      )}
+      <PinDialog
+        pin={selectedPin}
+        onDelete={deletePin}
+        onClose={() => setSelectedPin(null)}
+        hoveredPin={hoveredPin}
+        hoveredPinPosition={hoveredPinPosition}
+        onHoverLeave={handlePinLeave}
+      />
     </div>
   )
 }
