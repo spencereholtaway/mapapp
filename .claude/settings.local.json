@@ -61,7 +61,8 @@
       "Bash(git add -A)",
       "Bash(git commit -m \"Change icon weights to 1px and implement fitBounds zoom for pins\")",
       "Bash(git commit -m \"Remove maxZoom restriction on fitBounds\")",
-      "Bash(git commit -m \"Update PinDialog UI: card popup on desktop, bottom-sheet on mobile\")"
+      "Bash(git commit -m \"Update PinDialog UI: card popup on desktop, bottom-sheet on mobile\")",
+      "Bash(git commit -m \"Update mobile PinDialog design with slide-up tray\")"
     ]
   }
 }

@@ -31,37 +31,44 @@ export function PinDialog({ pin, onDelete, onClose }) {
         className="bottom-sheet md:hidden"
         onClick={handleClickOutside}
       >
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
+          {/* Drag Handle */}
           <div className="flex-shrink-0 h-1 w-12 bg-gray-400 rounded-full mx-auto opacity-40" />
 
-          <div>
-            <h2 className="text-lg font-semibold mb-3">Pin Details</h2>
-            <div className="space-y-2 text-sm">
-              <div>
-                <label className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Latitude</label>
-                <p className="font-mono text-base">{pin.latitude.toFixed(6)}</p>
-              </div>
-              <div>
-                <label className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Longitude</label>
-                <p className="font-mono text-base">{pin.longitude.toFixed(6)}</p>
-              </div>
+          {/* Header with Icon and Info */}
+          <div className="flex gap-4">
+            {/* Pin Icon */}
+            <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-blue-600 flex items-center justify-center">
+              <MapPin className="w-8 h-8 text-white" strokeWidth={1} />
+            </div>
+
+            {/* Title and Timestamp */}
+            <div className="flex flex-col justify-center">
+              <h2 className="text-xl font-semibold">Saved Pin</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{formattedDate}, {formattedTime}</p>
             </div>
           </div>
 
-          <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <button
-              onClick={onClose}
-              className="btn flex-1"
-            >
-              Close
-            </button>
-            <button
-              onClick={handleDelete}
-              className="btn flex-1 bg-red-500 hover:bg-red-600 text-white border-red-600"
-            >
-              Delete
-            </button>
+          {/* Latitude and Longitude Boxes */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+              <label className="text-gray-600 dark:text-gray-400 text-xs uppercase tracking-wide block mb-1">Latitude</label>
+              <p className="font-mono font-semibold text-lg">{pin.latitude.toFixed(6)}</p>
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+              <label className="text-gray-600 dark:text-gray-400 text-xs uppercase tracking-wide block mb-1">Longitude</label>
+              <p className="font-mono font-semibold text-lg">{pin.longitude.toFixed(6)}</p>
+            </div>
           </div>
+
+          {/* Delete Button */}
+          <button
+            onClick={handleDelete}
+            className="w-full btn bg-red-500 hover:bg-red-600 text-white border-red-600 py-3 rounded-lg flex items-center justify-center gap-2 text-base font-medium"
+          >
+            <Trash2 className="w-5 h-5" strokeWidth={1} />
+            Delete This Pin
+          </button>
         </div>
       </div>
 
