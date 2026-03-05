@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -24,9 +26,15 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Commit and push built files
+      - name: Deploy to docs folder
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/
-          git diff --staged --quiet || (git commit -m "Build: update docs" && git push)
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/ --force
+          if ! git diff --staged --quiet; then
+            git commit -m "Build: update docs [skip ci]"
+            git push
+            echo "Pushed updated docs"
+          else
+            echo "No changes to docs"
+          fi
