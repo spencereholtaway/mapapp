@@ -21,7 +21,7 @@ export function ControlPanel({
 
   return (
     <>
-      <div className="absolute top-4 left-4 z-40 flex flex-col gap-2" style={{ width: '220px' }}>
+      <div className="absolute top-4 left-4 z-40 flex flex-col gap-2">
         {/* Pin Count - Split Pill Button */}
         <div
           className="glass flex items-center !rounded-full overflow-hidden text-sm font-medium"
@@ -55,8 +55,8 @@ export function ControlPanel({
         <div className="flex gap-2">
           <button
             onClick={onImport}
-            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full !justify-start flex-1 min-w-0"
-            style={{ paddingLeft: '11px', paddingRight: '11px' }}
+            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full !justify-start"
+            style={{ paddingLeft: '11px', paddingRight: '11px', maxWidth: uploadedFileName ? '130px' : 'none' }}
             title="Load pins from file"
             aria-label="Load pins from file"
           >
@@ -66,7 +66,7 @@ export function ControlPanel({
 
           <button
             onClick={onExport}
-            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full !justify-start flex-1 min-w-0"
+            className="btn glass py-2 text-sm font-medium flex items-center gap-2 !rounded-full !justify-start"
             style={{ paddingLeft: '11px', paddingRight: '11px' }}
             title="Save pins to file"
             aria-label="Save pins to file"
