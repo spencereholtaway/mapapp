@@ -30,7 +30,7 @@ export function ControlPanel({
           <button
             onClick={onZoomToAll}
             className="flex items-center gap-2 py-2"
-            style={{ paddingRight: '10px' }}
+            style={{ paddingRight: '10px', minWidth: '92px' }}
             title="Zoom to all pins"
             aria-label={`${pinCount} pins - click to zoom to all`}
           >
@@ -38,11 +38,12 @@ export function ControlPanel({
             <span>{pinCount} {pinCount === 1 ? 'Pin' : 'Pins'}</span>
           </button>
 
-          <div className="w-px h-5 bg-current opacity-20 flex-shrink-0" />
+          <div className="w-px self-stretch bg-current opacity-20" />
 
           <button
             onClick={() => setShowDeleteDialog(true)}
-            className="flex items-center justify-center py-2 px-3 opacity-50 hover:opacity-100 transition-opacity"
+            className="flex items-center justify-center self-stretch opacity-50 hover:opacity-100 transition-opacity"
+            style={{ width: '44px' }}
             title="Delete all pins"
             aria-label="Delete all pins"
           >
