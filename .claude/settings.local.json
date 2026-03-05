@@ -73,7 +73,8 @@
       "Bash(/usr/local/bin/npm --version)",
       "Bash(echo $SHELL)",
       "Bash(source ~/.zshrc)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(xargs git rm --cached)"
     ]
   }
 }
