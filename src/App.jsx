@@ -5,7 +5,7 @@ import { ControlPanel } from './components/ControlPanel'
 import { useTheme } from './hooks/useTheme'
 import { useGeolocation } from './hooks/useGeolocation'
 import { usePins } from './hooks/usePins'
-import { MapPin } from 'lucide-react'
+import { MapPinPlus } from 'lucide-react'
 
 export default function App() {
   const { isDark, toggleTheme } = useTheme()
@@ -212,10 +212,10 @@ export default function App() {
         <button
           onClick={() => addPin(location.latitude, location.longitude)}
           className="absolute left-1/2 -translate-x-1/2 z-40 md:hidden btn glass !rounded-full px-5 py-2.5 flex items-center gap-2 text-sm font-medium"
-          style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 72px)' }}
+          style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 96px)' }}
           aria-label="Drop pin at current location"
         >
-          <MapPin className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
+          <MapPinPlus className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
           Drop Pin Here
         </button>
       )}
