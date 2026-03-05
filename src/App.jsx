@@ -12,6 +12,10 @@ export default function App() {
   const { location, error: locationError, isLoading: locationLoading, permissionDenied, retryLocation } = useGeolocation()
   const { pins, addPin, deletePin, deleteAllPins, importPins, getZoomForAllPins, getCenterForAllPins, exportToPinFormat, pinCount } = usePins()
 
+  const LIGHT_STYLES = ['landscape', 'outdoor-v2', 'aquarelle', 'backdrop', 'streets-v2']
+  const [lightStyleIndex, setLightStyleIndex] = useState(0)
+  const handleCycleStyle = () => setLightStyleIndex(i => (i + 1) % LIGHT_STYLES.length)
+
   const [selectedPin, setSelectedPin] = useState(null)
   const prevMapPositionRef = useRef(null)  // position before mobile offset centering
   const shouldRestoreRef = useRef(false)
@@ -202,6 +206,7 @@ export default function App() {
         mapCenter={mapCenter}
         mapZoom={mapZoom}
         isDark={isDark}
+        lightMapStyle={LIGHT_STYLES[lightStyleIndex]}
         shouldFitBounds={shouldFitBounds}
         onFitBoundsDone={() => setShouldFitBounds(false)}
         onDeletePin={deletePin}
@@ -213,6 +218,7 @@ export default function App() {
         onMyLocation={handleMyLocation}
         isDark={isDark}
         onToggleTheme={handleToggleTheme}
+        onCycleStyle={handleCycleStyle}
         onZoomToAll={handleZoomToAll}
         onExport={handleExport}
         onImport={handleImport}

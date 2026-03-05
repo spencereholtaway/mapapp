@@ -1,4 +1,4 @@
-import { MapPin, Crosshair, Moon, Sun, Save, File, Trash2 } from 'lucide-react'
+import { MapPin, Crosshair, Moon, Sun, Save, File, Trash2, Layers } from 'lucide-react'
 import { useState } from 'react'
 
 export function ControlPanel({
@@ -9,6 +9,7 @@ export function ControlPanel({
   onZoomToAll,
   onExport,
   onImport,
+  onCycleStyle,
   onDeleteAll
 }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -98,6 +99,17 @@ export function ControlPanel({
               <Moon className="w-5 h-5" strokeWidth={1} />
             )}
           </button>
+
+          {!isDark && (
+            <button
+              onClick={onCycleStyle}
+              className="btn btn-icon glass"
+              title="Change map style"
+              aria-label="Change map style"
+            >
+              <Layers className="w-5 h-5" strokeWidth={1} />
+            </button>
+          )}
         </div>
       </div>
 

@@ -53,6 +53,7 @@ export function Map({
   mapCenter,
   mapZoom,
   isDark = false,
+  lightMapStyle = 'landscape',
   onMapZoomChange,
   shouldFitBounds = false,
   onFitBoundsDone = () => {},
@@ -63,7 +64,7 @@ export function Map({
   // Tile layer URLs
   // Light: hardcode @2x so 512px tiles render at 256px CSS = perfect 1:1 on 2x retina
   const MAPTILER_KEY = '4VoqoKK7G2HVhGvf8EsC'
-  const lightTileUrl = `https://api.maptiler.com/maps/landscape/{z}/{x}/{y}@2x.png?key=${MAPTILER_KEY}`
+  const lightTileUrl = `https://api.maptiler.com/maps/${lightMapStyle}/{z}/{x}/{y}@2x.png?key=${MAPTILER_KEY}`
   const darkTileUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
   const tileUrl = isDark ? darkTileUrl : lightTileUrl
 
@@ -74,7 +75,7 @@ export function Map({
       style={{ width: '100%', height: '100%' }}
       ref={mapRef}
       zoomControl={false}
-      key={isDark ? 'dark' : 'light'}
+      key={isDark ? 'dark' : lightMapStyle}
       attributionControl={true}
       maxZoom={22}
     >
