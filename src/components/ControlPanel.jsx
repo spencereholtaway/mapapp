@@ -1,9 +1,10 @@
-import { MapPin, Crosshair, Moon, Sun, Save, File, Trash2, Layers } from 'lucide-react'
+import { MapPin, Navigate, Moon, Sun, Save, File, Trash2, Layers } from 'lucide-react'
 import { useState } from 'react'
 
 export function ControlPanel({
   pinCount,
   onMyLocation,
+  isFollowing,
   isDark,
   onToggleTheme,
   onZoomToAll,
@@ -80,11 +81,11 @@ export function ControlPanel({
         <div className="flex gap-2">
           <button
             onClick={onMyLocation}
-            className="btn btn-icon glass"
-            title="Go to my location"
-            aria-label="Go to my location"
+            className={`btn btn-icon ${isFollowing ? 'bg-blue-500' : 'glass'}`}
+            title={isFollowing ? 'Following your location' : 'Go to my location'}
+            aria-label={isFollowing ? 'Following your location' : 'Go to my location'}
           >
-            <Crosshair className="w-5 h-5" strokeWidth={1} />
+            <Navigate className="w-5 h-5" strokeWidth={1} />
           </button>
 
           <button
