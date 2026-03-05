@@ -20,7 +20,7 @@ export function ControlPanel({
         aria-label={`${pinCount} pins - click to zoom to all`}
         style={{ width: '100%', paddingLeft: '11px', paddingRight: '14px' }}
       >
-        <span className="w-5 h-5 flex-shrink-0 flex items-center justify-center"><MapPin className="w-5 h-5" /></span>
+        <span className="w-5 h-5 flex-shrink-0 flex items-center justify-center"><MapPin className="w-5 h-5" strokeWidth={1} /></span>
         <span>Pins</span>
         <span className="font-bold ml-auto">{pinCount}</span>
       </button>
@@ -33,7 +33,7 @@ export function ControlPanel({
         aria-label="Load pins from file"
         style={{ width: '100%', paddingLeft: '11px', paddingRight: '14px' }}
       >
-        <span className="w-5 h-5 flex-shrink-0 flex items-center justify-center"><File className="w-5 h-5" /></span>
+        <span className="w-5 h-5 flex-shrink-0 flex items-center justify-center"><File className="w-5 h-5" strokeWidth={1} /></span>
         <span className="truncate">{uploadedFileName || 'Load'}</span>
       </button>
 
@@ -46,7 +46,7 @@ export function ControlPanel({
           title="Go to my location"
           aria-label="Go to my location"
         >
-          <Crosshair className="w-5 h-5" />
+          <Crosshair className="w-5 h-5" strokeWidth={1} />
         </button>
 
         {/* Theme Toggle Button */}
@@ -57,9 +57,9 @@ export function ControlPanel({
           aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
         >
           {isDark ? (
-            <Sun className="w-5 h-5" />
+            <Sun className="w-5 h-5" strokeWidth={1} />
           ) : (
-            <Moon className="w-5 h-5" />
+            <Moon className="w-5 h-5" strokeWidth={1} />
           )}
         </button>
 
@@ -70,7 +70,7 @@ export function ControlPanel({
           title="Export pins"
           aria-label="Export pins to file"
         >
-          <Download className="w-5 h-5" />
+          <Download className="w-5 h-5" strokeWidth={1} />
         </button>
       </div>
     </div>

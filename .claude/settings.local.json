@@ -40,7 +40,26 @@
       "Bash(/Volumes/SSD/usr/local/bin/node /Volumes/SSD/usr/local/lib/node_modules/npm/bin/npm-cli.js install react-leaflet-cluster)",
       "Bash(/Volumes/SSD/usr/local/bin/node /Volumes/SSD/usr/local/lib/node_modules/npm/bin/npm-cli.js install react-leaflet-cluster@2.1.0)",
       "Bash(gh --version)",
-      "Bash(git --version)"
+      "Bash(git --version)",
+      "Bash(git remote add origin git@github.com:spencereholtaway/maps-app.git)",
+      "Bash(git push -u origin main)",
+      "Bash(git remote set-url origin git@github.com:spencereholtaway/maps-app.git)",
+      "Bash(git remote set-url origin git@github.com:spencereholtaway/mapapp.git)",
+      "Bash(git pull origin main)",
+      "Bash(git push --force origin main)",
+      "Bash(npm run build)",
+      "Bash(/Volumes/SSD/usr/local/bin/node /Volumes/SSD/usr/local/lib/node_modules/npm/bin/npm-cli.js run build)",
+      "Bash(/Volumes/SSD/usr/local/bin/node ./node_modules/vite/bin/vite.js build)",
+      "Bash(git add vite.config.js dist)",
+      "Bash(git commit -m \"Configure GitHub Pages and build app\")",
+      "Bash(git push origin main)",
+      "Bash(git add .github vite.config.js)",
+      "Bash(git commit -m \"Add GitHub Pages deployment workflow\")",
+      "Bash(git add vite.config.js .github docs)",
+      "Bash(git commit -m \"Deploy from main branch using docs folder\")",
+      "Bash(head -50 \"/Volumes/SSD/ViBe CoDeZ/Maps \\(claude code\\)/src/styles/globals.css\")",
+      "Bash(git add -A)",
+      "Bash(git commit -m \"Change icon weights to 1px and implement fitBounds zoom for pins\")"
     ]
   }
 }

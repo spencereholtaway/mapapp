@@ -56,7 +56,9 @@ export function Map({
   mapCenter,
   mapZoom,
   isDark = false,
-  onMapZoomChange
+  onMapZoomChange,
+  shouldFitBounds = false,
+  onFitBoundsDone = () => {}
 }) {
   const mapRef = useRef(null)
 
@@ -82,6 +84,9 @@ export function Map({
 
       {/* Map updater for center/zoom and zoom change listener */}
       <MapUpdater mapCenter={mapCenter} mapZoom={mapZoom} onMapZoomChange={onMapZoomChange} />
+
+      {/* Fit bounds to all pins when needed */}
+      <MapBoundsFitter pins={pins} shouldFitBounds={shouldFitBounds} onFitBoundsDone={onFitBoundsDone} />
 
       {/* Clustered pin markers */}
       <MarkerClusterGroup
@@ -161,6 +166,27 @@ function MapUpdater({ mapCenter, mapZoom, onMapZoomChange }) {
       map.off('moveend', handleMoveEnd)
     }
   }, [map, onMapZoomChange])
+
+  return null
+}
+
+function MapBoundsFitter({ pins, shouldFitBounds, onFitBoundsDone }) {
+  const map = useMap()
+
+  useEffect(() => {
+    if (shouldFitBounds && pins.length > 0) {
+      // Calculate bounds from all pins
+      const bounds = L.latLngBounds(
+        pins.map(pin => [pin.latitude, pin.longitude])
+      )
+
+      // Fit map to bounds with padding
+      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 17 })
+
+      // Notify parent that fit bounds is complete
+      onFitBoundsDone()
+    }
+  }, [map, pins, shouldFitBounds, onFitBoundsDone])
 
   return null
 }

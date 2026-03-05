@@ -15,6 +15,7 @@ export default function App() {
   const [uploadedFileName, setUploadedFileName] = useState(null)
   const [mapCenter, setMapCenter] = useState(null)
   const [mapZoom, setMapZoom] = useState(15)
+  const [shouldFitBounds, setShouldFitBounds] = useState(false)
 
   // Set initial map center when location is available
   useEffect(() => {
@@ -59,11 +60,7 @@ export default function App() {
       return
     }
 
-    const center = getCenterForAllPins()
-    const zoom = getZoomForAllPins()
-
-    setMapCenter([center.latitude, center.longitude])
-    setMapZoom(zoom)
+    setShouldFitBounds(true)
   }
 
   // Handle theme toggle
@@ -92,6 +89,7 @@ export default function App() {
         const count = importPins(event.target.result)
         if (count > 0) {
           setUploadedFileName(file.name)
+          setShouldFitBounds(true)
         }
       }
       reader.readAsText(file)
@@ -139,6 +137,8 @@ export default function App() {
         mapCenter={mapCenter}
         mapZoom={mapZoom}
         isDark={isDark}
+        shouldFitBounds={shouldFitBounds}
+        onFitBoundsDone={() => setShouldFitBounds(false)}
       />
 
       {/* Control Panel */}
