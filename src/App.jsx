@@ -12,8 +12,6 @@ export default function App() {
   const { pins, addPin, deletePin, importPins, getZoomForAllPins, getCenterForAllPins, exportToPinFormat, pinCount } = usePins()
 
   const [selectedPin, setSelectedPin] = useState(null)
-  const [hoveredPin, setHoveredPin] = useState(null)
-  const [hoveredPinPosition, setHoveredPinPosition] = useState(null)
   const [uploadedFileName, setUploadedFileName] = useState(null)
   const [mapCenter, setMapCenter] = useState(null)
   const [mapZoom, setMapZoom] = useState(15)
@@ -67,18 +65,6 @@ export default function App() {
     }
 
     setShouldFitBounds(true)
-  }
-
-  // Handle pin hover
-  const handlePinHover = (pin, position) => {
-    setHoveredPin(pin)
-    setHoveredPinPosition(position)
-  }
-
-  // Handle pin hover leave
-  const handlePinLeave = () => {
-    setHoveredPin(null)
-    setHoveredPinPosition(null)
   }
 
   // Handle theme toggle
@@ -157,8 +143,6 @@ export default function App() {
         isDark={isDark}
         shouldFitBounds={shouldFitBounds}
         onFitBoundsDone={() => setShouldFitBounds(false)}
-        onPinHover={handlePinHover}
-        onPinLeave={handlePinLeave}
       />
 
       {/* Control Panel */}
@@ -174,13 +158,11 @@ export default function App() {
       />
 
       {/* Pin Dialog */}
+      {/* Pin Dialog (mobile only - desktop uses Leaflet Tooltip) */}
       <PinDialog
         pin={selectedPin}
         onDelete={deletePin}
         onClose={() => setSelectedPin(null)}
-        hoveredPin={hoveredPin}
-        hoveredPinPosition={hoveredPinPosition}
-        onHoverLeave={handlePinLeave}
       />
     </div>
   )

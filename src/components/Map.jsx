@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -46,45 +46,6 @@ const createClusterIcon = (cluster) => {
   })
 }
 
-function PinMarker({ pin, onPinClick, onPinHover, onPinLeave }) {
-  const map = useMap()
-  const markerRef = useRef(null)
-
-  useEffect(() => {
-    if (!markerRef.current) return
-
-    const marker = markerRef.current
-    const handleMouseOver = () => {
-      const latLng = L.latLng(pin.latitude, pin.longitude)
-      const point = map.latLngToContainerPoint(latLng)
-      onPinHover(pin, { x: point.x, y: point.y })
-    }
-
-    const handleMouseOut = () => {
-      onPinLeave()
-    }
-
-    marker.on('mouseover', handleMouseOver)
-    marker.on('mouseout', handleMouseOut)
-
-    return () => {
-      marker.off('mouseover', handleMouseOver)
-      marker.off('mouseout', handleMouseOut)
-    }
-  }, [pin, map, onPinHover, onPinLeave])
-
-  return (
-    <Marker
-      ref={markerRef}
-      position={[pin.latitude, pin.longitude]}
-      icon={pinIcon}
-      eventHandlers={{
-        click: () => onPinClick(pin)
-      }}
-    />
-  )
-}
-
 export function Map({
   location,
   initialZoom = 15,
@@ -98,8 +59,7 @@ export function Map({
   onMapZoomChange,
   shouldFitBounds = false,
   onFitBoundsDone = () => {},
-  onPinHover = () => {},
-  onPinLeave = () => {}
+  onDeletePin
 }) {
   const mapRef = useRef(null)
 
@@ -138,13 +98,32 @@ export function Map({
         iconCreateFunction={createClusterIcon}
       >
         {pins.map((pin) => (
-          <PinMarker
+          <Marker
             key={pin.id}
-            pin={pin}
-            onPinClick={onPinClick}
-            onPinHover={onPinHover}
-            onPinLeave={onPinLeave}
-          />
+            position={[pin.latitude, pin.longitude]}
+            icon={pinIcon}
+            eventHandlers={{
+              click: () => onPinClick(pin)
+            }}
+          >
+            <Tooltip
+              direction="top"
+              offset={[0, -12]}
+              className="pin-tooltip"
+              opacity={1}
+            >
+              <div className="pin-tooltip-content">
+                <div className="pin-tooltip-header">
+                  <span className="pin-tooltip-icon">📍</span>
+                  <strong>Saved Pin</strong>
+                </div>
+                <div className="pin-tooltip-coords">
+                  <div><span className="pin-tooltip-label">Lat</span> {pin.latitude.toFixed(6)}</div>
+                  <div><span className="pin-tooltip-label">Lng</span> {pin.longitude.toFixed(6)}</div>
+                </div>
+              </div>
+            </Tooltip>
+          </Marker>
         ))}
       </MarkerClusterGroup>
 

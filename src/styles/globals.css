@@ -365,6 +365,66 @@ html.dark .bottom-sheet {
     0 2px 8px rgba(220, 38, 38, 0.2);
 }
 
+/* Pin Tooltip (Desktop Hover) */
+.pin-tooltip {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  padding: 0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+}
+
+.pin-tooltip .leaflet-tooltip-content {
+  margin: 0;
+}
+
+.pin-tooltip::before {
+  border-top-color: var(--bg-secondary) !important;
+}
+
+.pin-tooltip-content {
+  padding: 10px 14px;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  color: var(--text-primary);
+  min-width: 140px;
+}
+
+.pin-tooltip-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.pin-tooltip-icon {
+  font-size: 14px;
+}
+
+.pin-tooltip-coords {
+  font-family: 'SF Mono', ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.pin-tooltip-label {
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  margin-right: 4px;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+
+@media (max-width: 767px) {
+  .pin-tooltip {
+    display: none !important;
+  }
+}
+
 /* Leaflet Map Overrides */
 .leaflet-container {
   background: var(--bg-primary);
