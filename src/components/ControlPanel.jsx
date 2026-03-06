@@ -109,7 +109,7 @@ export function ControlPanel({
       </div>
 
       {/* Right-side map controls: Follow + Zoom In/Out */}
-      <div className="absolute z-40 flex flex-col gap-2" style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 160px)', right: '16px' }}>
+      <div className="absolute z-40 flex flex-col gap-2 map-controls-right" style={{ right: '16px' }}>
         <button
           onClick={onMyLocation}
           onMouseEnter={() => setFollowHovered(true)}
