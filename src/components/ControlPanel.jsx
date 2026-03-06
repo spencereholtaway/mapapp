@@ -1,5 +1,5 @@
 import { MapPin, Navigation, Moon, Sun, Save, File, Trash2, Layers, Plus, Minus } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export function ControlPanel({
   pinCount,
@@ -17,6 +17,13 @@ export function ControlPanel({
 }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [followHovered, setFollowHovered] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768)
+
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const handleDeleteAll = () => {
     onDeleteAll()
@@ -109,7 +116,7 @@ export function ControlPanel({
       </div>
 
       {/* Right-side map controls: Follow + Zoom In/Out */}
-      <div className="absolute z-40 flex flex-col gap-2 map-controls-right" style={{ right: '16px' }}>
+      <div className="absolute z-40 flex flex-col gap-2" style={{ bottom: `calc(env(safe-area-inset-bottom, 0px) + ${isDesktop ? '96px' : '160px'})`, right: '16px' }}>
         <button
           onClick={onMyLocation}
           onMouseEnter={() => setFollowHovered(true)}
