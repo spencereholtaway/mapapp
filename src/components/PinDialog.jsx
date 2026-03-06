@@ -69,10 +69,10 @@ export function PinDialog({ pin, onDelete, onClose }) {
           {pin.timestamp && (() => {
             const d = new Date(pin.timestamp)
             return (
-              <div className="text-gray-500 dark:text-gray-400 text-sm">
-                <span>{d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                <span className="mx-2">·</span>
-                <span>{d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Added</p>
+                <p className="text-sm font-medium">{d.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}</p>
               </div>
             )
           })()}
