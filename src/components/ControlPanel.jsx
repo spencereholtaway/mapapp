@@ -115,7 +115,7 @@ export function ControlPanel({
           title={isFollowing ? 'Following your location' : 'Go to my location'}
           aria-label={isFollowing ? 'Following your location' : 'Go to my location'}
         >
-          <Navigation className="w-5 h-5" strokeWidth={1} />
+          <Navigation className="w-5 h-5" strokeWidth={1} style={{ transform: 'translate(-1.5px, 1.5px)' }} />
         </button>
         <button
           onClick={onZoomIn}
