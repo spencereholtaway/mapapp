@@ -1,4 +1,4 @@
-import { MapPin, Navigate, Moon, Sun, Save, File, Trash2, Layers } from 'lucide-react'
+import { MapPin, Navigation, Moon, Sun, Save, File, Trash2, Layers } from 'lucide-react'
 import { useState } from 'react'
 
 export function ControlPanel({
@@ -85,7 +85,7 @@ export function ControlPanel({
             title={isFollowing ? 'Following your location' : 'Go to my location'}
             aria-label={isFollowing ? 'Following your location' : 'Go to my location'}
           >
-            <Navigate className="w-5 h-5" strokeWidth={1} />
+            <Navigation className="w-5 h-5" strokeWidth={1} />
           </button>
 
           <button
