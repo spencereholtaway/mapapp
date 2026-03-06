@@ -108,7 +108,7 @@ export function ControlPanel({
       </div>
 
       {/* Right-side map controls: Follow + Zoom In/Out */}
-      <div className="absolute z-40 flex flex-col gap-2" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 16px)', right: '16px' }}>
+      <div className="absolute z-40 flex flex-col gap-2" style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 160px)', right: '16px' }}>
         <button
           onClick={onMyLocation}
           className={`btn btn-icon ${isFollowing ? 'bg-blue-500 text-white' : 'glass'}`}
