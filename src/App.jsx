@@ -85,7 +85,7 @@ export default function App() {
     if (location) {
       setIsFollowing(true)
       setMapCenter([location.latitude, location.longitude])
-      setMapZoom(18)
+      setMapZoom(20)
     }
   }
 
