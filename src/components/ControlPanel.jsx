@@ -16,6 +16,7 @@ export function ControlPanel({
   onDeleteAll
 }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [followHovered, setFollowHovered] = useState(false)
 
   const handleDeleteAll = () => {
     onDeleteAll()
@@ -111,11 +112,13 @@ export function ControlPanel({
       <div className="absolute z-40 flex flex-col gap-2" style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 160px)', right: '16px' }}>
         <button
           onClick={onMyLocation}
+          onMouseEnter={() => setFollowHovered(true)}
+          onMouseLeave={() => setFollowHovered(false)}
           className={`btn btn-icon ${isFollowing ? 'bg-blue-500 text-white' : 'glass'}`}
           title={isFollowing ? 'Following your location' : 'Go to my location'}
           aria-label={isFollowing ? 'Following your location' : 'Go to my location'}
         >
-          <Navigation className="w-5 h-5" strokeWidth={1} fill={isFollowing ? 'currentColor' : 'none'} style={{ transform: 'translate(-1.5px, 1.5px)' }} />
+          <Navigation className="w-5 h-5" strokeWidth={1} fill={(isFollowing || followHovered) ? 'currentColor' : 'none'} style={{ transform: 'translate(-1.5px, 1.5px)' }} />
         </button>
         <button
           onClick={onZoomIn}
