@@ -180,7 +180,7 @@ function PinMarkers({ pins, onPinClick, onDeletePin, selectedPin }) {
 
   // Queue every ring (except optionally one) to pause at the end of its current iteration
   const pauseAllPinRings = useCallback((excludeIcon = null) => {
-    document.querySelectorAll('.pin-ring').forEach(ring => {
+    document.querySelectorAll('.pin-ring, .cluster-ring').forEach(ring => {
       if (excludeIcon && excludeIcon.contains(ring)) return
       const pauseOnIteration = () => {
         ring.style.animationPlayState = 'paused'
@@ -196,7 +196,7 @@ function PinMarkers({ pins, onPinClick, onDeletePin, selectedPin }) {
 
   // Cancel any pending pauses and resume all rings
   const resumeAllPinRings = useCallback(() => {
-    document.querySelectorAll('.pin-ring').forEach(ring => {
+    document.querySelectorAll('.pin-ring, .cluster-ring').forEach(ring => {
       if (ring._pendingPause) {
         ring.removeEventListener('animationiteration', ring._pendingPause)
         ring._pendingPause = null
