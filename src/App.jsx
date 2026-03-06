@@ -89,6 +89,10 @@ export default function App() {
     }
   }
 
+  // Handle zoom in/out
+  const handleZoomIn = () => setMapZoom(z => Math.min(z + 1, 22))
+  const handleZoomOut = () => setMapZoom(z => Math.max(z - 1, 1))
+
   // Handle "Zoom to All Pins" button
   const handleZoomToAll = () => {
     if (pins.length === 0) {
@@ -220,6 +224,8 @@ export default function App() {
         pinCount={pinCount}
         onMyLocation={handleMyLocation}
         isFollowing={isFollowing}
+        onZoomIn={handleZoomIn}
+        onZoomOut={handleZoomOut}
         isDark={isDark}
         onToggleTheme={handleToggleTheme}
         onCycleStyle={handleCycleStyle}

@@ -1,10 +1,12 @@
-import { MapPin, Navigation, Moon, Sun, Save, File, Trash2, Layers } from 'lucide-react'
+import { MapPin, Navigation, Moon, Sun, Save, File, Trash2, Layers, Plus, Minus } from 'lucide-react'
 import { useState } from 'react'
 
 export function ControlPanel({
   pinCount,
   onMyLocation,
   isFollowing,
+  onZoomIn,
+  onZoomOut,
   isDark,
   onToggleTheme,
   onZoomToAll,
@@ -80,15 +82,6 @@ export function ControlPanel({
         {/* Icon-Only Buttons Row */}
         <div className="flex gap-2">
           <button
-            onClick={onMyLocation}
-            className={`btn btn-icon ${isFollowing ? 'bg-blue-500' : 'glass'}`}
-            title={isFollowing ? 'Following your location' : 'Go to my location'}
-            aria-label={isFollowing ? 'Following your location' : 'Go to my location'}
-          >
-            <Navigation className="w-5 h-5" strokeWidth={1} />
-          </button>
-
-          <button
             onClick={onToggleTheme}
             className="btn btn-icon glass"
             title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
@@ -112,6 +105,34 @@ export function ControlPanel({
             </button>
           )}
         </div>
+      </div>
+
+      {/* Right-side map controls: Follow + Zoom In/Out */}
+      <div className="absolute z-40 flex flex-col gap-2" style={{ top: 'calc(env(safe-area-inset-top, 0px) + 16px)', right: '16px' }}>
+        <button
+          onClick={onMyLocation}
+          className={`btn btn-icon ${isFollowing ? 'bg-blue-500 text-white' : 'glass'}`}
+          title={isFollowing ? 'Following your location' : 'Go to my location'}
+          aria-label={isFollowing ? 'Following your location' : 'Go to my location'}
+        >
+          <Navigation className="w-5 h-5" strokeWidth={1} />
+        </button>
+        <button
+          onClick={onZoomIn}
+          className="btn btn-icon glass"
+          title="Zoom in"
+          aria-label="Zoom in"
+        >
+          <Plus className="w-5 h-5" strokeWidth={1.5} />
+        </button>
+        <button
+          onClick={onZoomOut}
+          className="btn btn-icon glass"
+          title="Zoom out"
+          aria-label="Zoom out"
+        >
+          <Minus className="w-5 h-5" strokeWidth={1.5} />
+        </button>
       </div>
 
       {/* Delete All Confirmation Dialog */}
