@@ -116,7 +116,7 @@ export default function App() {
   const handleImport = () => {
     const input = document.createElement('input')
     input.type = 'file'
-    input.accept = '.txt,.csv'
+    input.accept = '.txt,.csv,text/plain,text/csv'
     input.onchange = (e) => {
       const file = e.target.files[0]
       if (!file) return
