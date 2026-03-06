@@ -115,8 +115,8 @@ export function ControlPanel({
           onMouseEnter={() => setFollowHovered(true)}
           onMouseLeave={() => setFollowHovered(false)}
           className={`btn btn-icon ${isFollowing ? 'bg-blue-500 text-white' : 'glass'}`}
-          title={isFollowing ? 'Following your location' : 'Go to my location'}
-          aria-label={isFollowing ? 'Following your location' : 'Go to my location'}
+          title={isFollowing ? 'Following my location' : 'Follow my location'}
+          aria-label={isFollowing ? 'Following my location' : 'Follow my location'}
         >
           <Navigation className="w-5 h-5" strokeWidth={1} fill={(isFollowing || followHovered) ? 'currentColor' : 'none'} style={{ transform: 'translate(-1.5px, 1.5px)' }} />
         </button>
