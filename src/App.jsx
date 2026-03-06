@@ -217,6 +217,7 @@ export default function App() {
         onFitBoundsDone={() => setShouldFitBounds(false)}
         onDeletePin={deletePin}
         onExitFollow={() => setIsFollowing(false)}
+        selectedPin={selectedPin}
       />
 
       {/* Control Panel */}

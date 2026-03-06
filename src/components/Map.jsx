@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useMemo } from 'react'
+import { useEffect, useState, useRef, useMemo, useCallback } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMap } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import L from 'leaflet'
@@ -58,7 +58,8 @@ export function Map({
   shouldFitBounds = false,
   onFitBoundsDone = () => {},
   onDeletePin,
-  onExitFollow
+  onExitFollow,
+  selectedPin = null
 }) {
   const mapRef = useRef(null)
 
@@ -95,7 +96,7 @@ export function Map({
       <MapBoundsFitter pins={pins} shouldFitBounds={shouldFitBounds} onFitBoundsDone={onFitBoundsDone} />
 
       {/* Clustered pin markers */}
-      <PinMarkers pins={pins} onPinClick={onPinClick} onDeletePin={onDeletePin} />
+      <PinMarkers pins={pins} onPinClick={onPinClick} onDeletePin={onDeletePin} selectedPin={selectedPin} />
 
       {/* Location marker - rendered last so it appears underneath */}
       <LocationMarker location={location} isDark={isDark} />
@@ -174,8 +175,44 @@ function MapUpdater({ mapCenter, mapZoom, onMapZoomChange, onExitFollow }) {
   return null
 }
 
-function PinMarkers({ pins, onPinClick, onDeletePin }) {
+function PinMarkers({ pins, onPinClick, onDeletePin, selectedPin }) {
   const map = useMap()
+
+  // Queue every ring (except optionally one) to pause at the end of its current iteration
+  const pauseAllPinRings = useCallback((excludeIcon = null) => {
+    document.querySelectorAll('.pin-ring').forEach(ring => {
+      if (excludeIcon && excludeIcon.contains(ring)) return
+      const pauseOnIteration = () => {
+        ring.style.animationPlayState = 'paused'
+        ring.removeEventListener('animationiteration', pauseOnIteration)
+      }
+      if (ring._pendingPause) {
+        ring.removeEventListener('animationiteration', ring._pendingPause)
+      }
+      ring._pendingPause = pauseOnIteration
+      ring.addEventListener('animationiteration', pauseOnIteration)
+    })
+  }, [])
+
+  // Cancel any pending pauses and resume all rings
+  const resumeAllPinRings = useCallback(() => {
+    document.querySelectorAll('.pin-ring').forEach(ring => {
+      if (ring._pendingPause) {
+        ring.removeEventListener('animationiteration', ring._pendingPause)
+        ring._pendingPause = null
+      }
+      ring.style.animationPlayState = 'running'
+    })
+  }, [])
+
+  // Mobile: pause when tray opens, resume when it closes
+  useEffect(() => {
+    if (selectedPin) {
+      pauseAllPinRings()
+    } else {
+      resumeAllPinRings()
+    }
+  }, [selectedPin, pauseAllPinRings, resumeAllPinRings])
 
   const handlePinClick = (pin) => {
     if (window.innerWidth < 768) {
@@ -211,7 +248,15 @@ function PinMarkers({ pins, onPinClick, onDeletePin }) {
           position={[pin.latitude, pin.longitude]}
           icon={pinIcon}
           eventHandlers={{
-            click: () => handlePinClick(pin)
+            click: () => handlePinClick(pin),
+            mouseover: (e) => {
+              if (window.innerWidth < 768) return
+              pauseAllPinRings(e.target._icon || null)
+            },
+            mouseout: () => {
+              if (window.innerWidth < 768) return
+              resumeAllPinRings()
+            }
           }}
         >
           <Tooltip
