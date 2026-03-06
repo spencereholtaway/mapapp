@@ -22,13 +22,14 @@ export default function App() {
   const [mapCenter, setMapCenter] = useState(null)
   const [mapZoom, setMapZoom] = useState(15)
   const [shouldFitBounds, setShouldFitBounds] = useState(false)
+  const [isFollowing, setIsFollowing] = useState(true)
 
-  // Set initial map center when location is available
+  // Auto-follow: keep map centered on user location while following is active
   useEffect(() => {
-    if (location && !mapCenter) {
+    if (isFollowing && location) {
       setMapCenter([location.latitude, location.longitude])
     }
-  }, [location, mapCenter])
+  }, [location, isFollowing])
 
 
   // Handle map click to add pins (disabled while dialog is open)
@@ -79,9 +80,10 @@ export default function App() {
     setMapZoom(expansionZoom)
   }
 
-  // Handle "My Location" button
+  // Handle "My Location" button — re-center and re-enable following
   const handleMyLocation = () => {
     if (location) {
+      setIsFollowing(true)
       setMapCenter([location.latitude, location.longitude])
       setMapZoom(18)
     }
@@ -210,12 +212,14 @@ export default function App() {
         shouldFitBounds={shouldFitBounds}
         onFitBoundsDone={() => setShouldFitBounds(false)}
         onDeletePin={deletePin}
+        onExitFollow={() => setIsFollowing(false)}
       />
 
       {/* Control Panel */}
       <ControlPanel
         pinCount={pinCount}
         onMyLocation={handleMyLocation}
+        isFollowing={isFollowing}
         isDark={isDark}
         onToggleTheme={handleToggleTheme}
         onCycleStyle={handleCycleStyle}

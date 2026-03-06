@@ -57,7 +57,8 @@ export function Map({
   onMapZoomChange,
   shouldFitBounds = false,
   onFitBoundsDone = () => {},
-  onDeletePin
+  onDeletePin,
+  onExitFollow
 }) {
   const mapRef = useRef(null)
 
@@ -88,7 +89,7 @@ export function Map({
       />
 
       {/* Map updater for center/zoom and zoom change listener */}
-      <MapUpdater mapCenter={mapCenter} mapZoom={mapZoom} onMapZoomChange={onMapZoomChange} />
+      <MapUpdater mapCenter={mapCenter} mapZoom={mapZoom} onMapZoomChange={onMapZoomChange} onExitFollow={onExitFollow} />
 
       {/* Fit bounds to all pins when needed */}
       <MapBoundsFitter pins={pins} shouldFitBounds={shouldFitBounds} onFitBoundsDone={onFitBoundsDone} />
@@ -121,7 +122,7 @@ function MapClickHandler({ onMapClick }) {
   return null
 }
 
-function MapUpdater({ mapCenter, mapZoom, onMapZoomChange }) {
+function MapUpdater({ mapCenter, mapZoom, onMapZoomChange, onExitFollow }) {
   const map = useMap()
 
   // Leaflet captures container size at mount time. If the browser hasn't
@@ -162,6 +163,13 @@ function MapUpdater({ mapCenter, mapZoom, onMapZoomChange }) {
       map.off('moveend', handleMoveEnd)
     }
   }, [map, onMapZoomChange])
+
+  // Detect user-initiated drag and exit follow mode
+  useEffect(() => {
+    if (!onExitFollow) return
+    map.on('dragstart', onExitFollow)
+    return () => map.off('dragstart', onExitFollow)
+  }, [map, onExitFollow])
 
   return null
 }
@@ -218,6 +226,16 @@ function PinMarkers({ pins, onPinClick, onDeletePin }) {
                 <div><span className="pin-tooltip-label">Lat</span> {pin.latitude.toFixed(6)}</div>
                 <div><span className="pin-tooltip-label">Lng</span> {pin.longitude.toFixed(6)}</div>
               </div>
+              {pin.timestamp && (() => {
+                const d = new Date(pin.timestamp)
+                return (
+                  <div className="pin-tooltip-datetime">
+                    {d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}
+                    {' · '}
+                    {d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                  </div>
+                )
+              })()}
               <div className="pin-tooltip-hint">Click to delete</div>
             </div>
           </Tooltip>

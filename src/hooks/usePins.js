@@ -34,7 +34,8 @@ export function usePins() {
     const newPin = {
       id: Date.now(),
       latitude,
-      longitude
+      longitude,
+      timestamp: new Date().toISOString()
     }
     setPins(prevPins => {
       const updated = [...prevPins, newPin]
@@ -126,7 +127,10 @@ export function usePins() {
 
   // Export pins to text format
   const exportToPinFormat = useCallback(() => {
-    return pins.map(pin => `${pin.latitude},${pin.longitude}`).join('\n')
+    return pins.map(pin => {
+      const base = `${pin.latitude},${pin.longitude}`
+      return pin.timestamp ? `${base},${pin.timestamp}` : base
+    }).join('\n')
   }, [pins])
 
   // Import pins from text format (replaces existing pins)
@@ -139,7 +143,9 @@ export function usePins() {
         const lat = parseFloat(parts[0])
         const lng = parseFloat(parts[1])
         if (!isNaN(lat) && !isNaN(lng)) {
-          imported.push({ id: Date.now() + imported.length, latitude: lat, longitude: lng })
+          const pin = { id: Date.now() + imported.length, latitude: lat, longitude: lng }
+          if (parts[2]) pin.timestamp = parts[2]
+          imported.push(pin)
         }
       }
     }
