@@ -241,6 +241,16 @@ function PinMarkers({ pins, onPinClick, onDeletePin, selectedPin }) {
       disableClusteringAtZoom={18}
       showCoverageOnHover={false}
       iconCreateFunction={createClusterIcon}
+      eventHandlers={{
+        clustermouseover: (e) => {
+          if (window.innerWidth < 768) return
+          pauseAllPinRings(e.layer._icon || null)
+        },
+        clustermouseout: () => {
+          if (window.innerWidth < 768) return
+          resumeAllPinRings()
+        }
+      }}
     >
       {pins.map((pin) => (
         <Marker
