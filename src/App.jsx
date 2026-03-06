@@ -12,7 +12,7 @@ export default function App() {
   const { location, error: locationError, isLoading: locationLoading, permissionDenied, retryLocation } = useGeolocation()
   const { pins, addPin, deletePin, deleteAllPins, importPins, getZoomForAllPins, getCenterForAllPins, exportToPinFormat, pinCount } = usePins()
 
-  const LIGHT_STYLES = ['landscape', 'topo-v2', 'aquarelle', 'backdrop', 'streets-v2']
+  const LIGHT_STYLES = ['streets-v2', 'topo-v2', 'backdrop', 'aquarelle']
   const [lightStyleIndex, setLightStyleIndex] = useState(0)
   const handleCycleStyle = () => setLightStyleIndex(i => (i + 1) % LIGHT_STYLES.length)
 
