@@ -115,6 +115,32 @@ export function ControlPanel({
         </div>
       </div>
 
+      {/* Buy Me a Coffee — top-right */}
+      <a
+        href="https://www.buymeacoffee.com/holtaway"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute z-40 flex items-center gap-2 text-sm font-medium !rounded-full overflow-hidden"
+        style={{
+          top: 'calc(env(safe-area-inset-top, 0px) + 16px)',
+          right: '16px',
+          background: '#FFDD00',
+          border: '1px solid #000',
+          color: '#000',
+          paddingLeft: '11px',
+          paddingRight: '16px',
+          minHeight: '44px',
+          fontFamily: 'Poppins, sans-serif',
+          textDecoration: 'none',
+          whiteSpace: 'nowrap',
+        }}
+        title="Buy me a coffee?"
+        aria-label="Buy me a coffee?"
+      >
+        <span style={{ fontSize: '1.1rem', lineHeight: 1 }}>☕</span>
+        <span>Buy me a coffee?</span>
+      </a>
+
       {/* Right-side map controls: Follow + Zoom In/Out */}
       <div className="absolute z-40 flex flex-col gap-2" style={{ bottom: `calc(env(safe-area-inset-bottom, 0px) + ${isDesktop ? '96px' : '160px'})`, right: '16px' }}>
         <button
